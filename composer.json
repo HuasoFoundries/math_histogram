@@ -7,7 +7,7 @@
 
 	"autoload": {
 		"psr-0": {
-			"Histogram": "./"
+			"PEAR\\Histogram": "./"
 		}
 	},
 	"description": "More info available on: http://pear.php.net/package/Math_Histogram",

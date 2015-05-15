@@ -1,5 +1,5 @@
 <?php
-namespace\PEAR\Histogram;
+namespace PEAR\Histogram;
 
 class Histogram extends AbstractHistogram
 {
@@ -231,7 +231,7 @@ class Histogram extends AbstractHistogram
     public static function isValidHistogram(&$hist)
     {
 
-        return (is_object($hist) && is_a($hist, '\Histogram\Histogram'));
+        return (is_object($hist) && is_a($hist, '\PEAR\Histogram\Histogram'));
     }
 
     /**
@@ -256,11 +256,11 @@ class Histogram extends AbstractHistogram
     public function generatePlot(&$printer)
     {
 
-        if (is_object($printer) && is_a($printer, '\Histogram\Printer\Common')) {
+        if (is_object($printer) && is_a($printer, '\PEAR\Histogram\Printer\Common')) {
             $printer->setHistogram($this);
             return $printer->generateOutput();
         } else {
-            return \PEAR::raiseError('Invalid object, expecting a \Histogram\Printer\* instance');
+            return \PEAR::raiseError('Invalid object, expecting a \PEAR\Histogram\Printer\* instance');
         }
     }
 

@@ -1,5 +1,5 @@
 <?php
-namespace Histogram;
+namespace PEAR\Histogram;
 
 /**
  * Abstract class defining common properties and methods for
@@ -48,7 +48,7 @@ class AbstractHistogram
      * @access  private
      * @var array
      */
-    public $_bins = [];
+    public $_bins = array();
     /**
      * Number(s) of bins to use in calculation
      *
@@ -226,18 +226,18 @@ class AbstractHistogram
             $getHistogramDataStats = $this->getHistogramDataStats();
             //\Util\Helpers::prdie('getHistogramInfo after $getHistogramDataStats');
 
-            $info = [
+            $info = array(
                 "type" => ($this->_type == self::HISTOGRAM_CUMMULATIVE) ?
                 "cummulative frequency" : "histogram",
                 "data_stats" => $data_stats,
                 "hist_data_stats" => $getHistogramDataStats,
                 "bins" => $this->_bins,
                 "nbins" => $this->_nbins,
-                "range" => [
+                "range" => array(
                     "low" => $this->_rangeLow,
                     "high" => $this->_rangeHigh,
-                ],
-            ];
+                ),
+            );
             return $info;
         } else {
             return PEAR::raiseError("histogram has not been calculated");
@@ -256,8 +256,8 @@ class AbstractHistogram
         $this->_stats = null;
         $this->_statsMode = null;
         $this->_data = null;
-        $this->_orig = [];
-        $this->_bins = [];
+        $this->_orig = array();
+        $this->_bins = array();
     }
 
     /**
@@ -271,7 +271,7 @@ class AbstractHistogram
     public function _histogramData()
     {
 
-        return [];
+        return array();
     }
 
 }

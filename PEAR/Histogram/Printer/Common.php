@@ -1,5 +1,5 @@
 <?php
-namespace Histogram\Printer;
+namespace PEAR\Histogram\Printer;
 
 /**
  * Base class for histogram printer objects
@@ -86,7 +86,7 @@ class Common
     public function setHistogram(&$hist)
     {
 
-        if (\Histogram\Histogram::isValidHistogram($hist)) {
+        if (\PEAR\Histogram\Histogram::isValidHistogram($hist)) {
             $this->_hist = &$hist;
             return true;
         } else {
@@ -131,7 +131,7 @@ class Common
      * @param array $options An array of options for the printer object
      * @return boolean|PEAR_Error TRUE on success, a \PEAR_Error otherwise
      */
-    public function printHistogram(&$hist, $options = [])
+    public function printHistogram(&$hist, $options = array())
     {
 
         return \PEAR::raiseError('Unimplemented method');

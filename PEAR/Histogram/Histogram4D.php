@@ -1,5 +1,5 @@
 <?php
-namespace Histogram;
+namespace PEAR\Histogram;
 
 /**
  * Class to generate 4D histograms from tri-dimensional numeric

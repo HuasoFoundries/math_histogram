@@ -79,15 +79,15 @@ class Histogram3D extends AbstractHistogram
         list($xMin, $xMax) = $this->_getMinMax('x');
         list($yMin, $yMax) = $this->_getMinMax('y');
         if (is_null($this->_rangeLow)) {
-            $this->_rangeLow = ['x' => $xMin, 'y' => $yMin];
+            $this->_rangeLow = array('x' => $xMin, 'y' => $yMin);
         }
 
         if (is_null($this->_rangeHigh)) {
-            $this->_rangeHigh = ['x' => $xMax, 'y' => $yMax];
+            $this->_rangeHigh = array('x' => $xMax, 'y' => $yMax);
         }
 
         if (is_null($this->_nbins)) {
-            $this->_nbins = ['x' => 10, 'y' => 10];
+            $this->_nbins = array('x' => 10, 'y' => 10);
         }
 
         return true;
@@ -105,8 +105,8 @@ class Histogram3D extends AbstractHistogram
     public function calculate($statsMode = self::STATS_BASIC)
     {
 
-        $this->_bins = [];
-        $this->_stats = ['x' => new \Math\Stats(), 'y' => new \Math\Stats()];
+        $this->_bins = array();
+        $this->_stats = array('x' => new \PEAR\Math\Stats(), 'y' => new \PEAR\Math\Stats());
         $this->_statsMode = $statsMode;
         $deltaX = ($this->_rangeHigh['x'] - $this->_rangeLow['x']) / $this->_nbins['x'];
         $deltaY = ($this->_rangeHigh['y'] - $this->_rangeLow['y']) / $this->_nbins['y'];
@@ -115,20 +115,20 @@ class Histogram3D extends AbstractHistogram
         //$dataY = $this->_data['y'];
         $dataX = $data['x'];
         $dataY = $data['y'];
-        $ignoreList = [];
+        $ignoreList = array();
         $cumm = 0;
         $nData = count($dataX);
         for ($i = 0; $i < $this->_nbins['x']; $i++) {
             $loXBin = $this->_rangeLow['x'] + $i * $deltaX;
             $hiXBin = $loXBin + $deltaX;
-            $xBin = ['low' => $loXBin, 'high' => $hiXBin,
-                'mid' => ($hiXBin + $loXBin) / 2];
+            $xBin = array('low' => $loXBin, 'high' => $hiXBin,
+                'mid' => ($hiXBin + $loXBin) / 2);
             for ($j = 0; $j < $this->_nbins['y']; $j++) {
                 $loYBin = $this->_rangeLow['y'] + $j * $deltaY;
                 $hiYBin = $loYBin + $deltaY;
-                $yBin = ['low' => $loYBin, 'high' => $hiYBin,
-                    'mid' => ($hiYBin + $loYBin) / 2];
-                $bin = ['x' => $xBin, 'y' => $yBin];
+                $yBin = array('low' => $loYBin, 'high' => $hiYBin,
+                    'mid' => ($hiYBin + $loYBin) / 2);
+                $bin = array('x' => $xBin, 'y' => $yBin);
                 $freq = 0;
                 for ($k = 0; $k < $nData; $k++) {
                     if (!empty($ignoreList) && in_array($k, $ignoreList)) {
@@ -188,8 +188,8 @@ class Histogram3D extends AbstractHistogram
 
         $this->_stats['x']->setData($this->_data['x']);
         $this->_stats['y']->setData($this->_data['y']);
-        return ['x' => $this->_stats['x']->calc($this->_statsMode),
-            'y' => $this->_stats['y']->calc($this->_statsMode)];
+        return array('x' => $this->_stats['x']->calc($this->_statsMode),
+            'y' => $this->_stats['y']->calc($this->_statsMode));
     }
 
     /**
@@ -208,8 +208,8 @@ class Histogram3D extends AbstractHistogram
         $data = $this->_histogramData();
         $this->_stats['x']->setData($data['x']);
         $this->_stats['y']->setData($data['y']);
-        return ['x' => $this->_stats['x']->calc($this->_statsMode),
-            'y' => $this->_stats['y']->calc($this->_statsMode)];
+        return array('x' => $this->_stats['x']->calc($this->_statsMode),
+            'y' => $this->_stats['y']->calc($this->_statsMode));
     }
 
     /**
@@ -230,7 +230,7 @@ class Histogram3D extends AbstractHistogram
         }
 
         $nbins = count($bins);
-        $out = ["# x_bin{$separator}y_bin{$separator}frequency"];
+        $out = array("# x_bin{$separator}y_bin{$separator}frequency");
         for ($i = 0; $i < $nbins; $i++) {
             $out[] = implode($separator, $bins[$i]);
         }
@@ -249,7 +249,7 @@ class Histogram3D extends AbstractHistogram
     public function _getMinMax($elem)
     {
 
-        return [min($this->_data[$elem]), max($this->_data[$elem])];
+        return array(min($this->_data[$elem]), max($this->_data[$elem]));
     }
 
     /**
@@ -262,12 +262,12 @@ class Histogram3D extends AbstractHistogram
     public function _filterBins($mode)
     {
 
-        $map = [
+        $map = array(
             self::HISTOGRAM_MID_BINS => "mid",
             self::HISTOGRAM_LO_BINS => "low",
             self::HISTOGRAM_HI_BINS => "high",
-        ];
-        $filtered = [];
+        );
+        $filtered = array();
         foreach ($this->_bins as $bin) {
             $tmp['x'] = $bin['x'][$map[$mode]];
             $tmp['y'] = $bin['y'][$map[$mode]];
@@ -358,7 +358,7 @@ class Histogram3D extends AbstractHistogram
             return $this->_data;
         }
 
-        $data = [];
+        $data = array();
         $ndata = count($this->_data['x']);
         for ($i = 0; $i < $ndata; $i++) {
             $x = $this->_data['x'][$i];

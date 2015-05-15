@@ -1,5 +1,5 @@
 <?php
-namespace Histogram;
+namespace\PEAR\Histogram;
 
 class Histogram extends AbstractHistogram
 {
@@ -54,11 +54,11 @@ class Histogram extends AbstractHistogram
     public function getBinOptions()
     {
 
-        return [
+        return array(
             'nbins' => $this->_nbins,
             'rangeLow' => $this->_rangeLow,
             'rangeHigh' => $this->_rangeHigh,
-        ];
+        );
     }
 
     /**
@@ -110,10 +110,10 @@ class Histogram extends AbstractHistogram
      *
      * @see Math_Stats
      */
-    public function calculate($statsMode = \Math\Stats::STATS_BASIC)
+    public function calculate($statsMode = \PEAR\Math\Stats::STATS_BASIC)
     {
 
-        $this->_stats = new \Math\Stats();
+        $this->_stats = new \PEAR\Math\Stats();
 
         $this->_statsMode = $statsMode;
         $delta = ($this->_rangeHigh - $this->_rangeLow) / $this->_nbins;
@@ -121,7 +121,7 @@ class Histogram extends AbstractHistogram
         $cumm = 0;
         $data = $this->_histogramData();
         $ndata = count($data);
-        $ignoreList = [];
+        $ignoreList = array();
 
         for ($i = 0; $i < $this->_nbins; $i++) {
             $loBin = $this->_rangeLow + $i * $delta;
@@ -212,7 +212,7 @@ class Histogram extends AbstractHistogram
         }
 
         $nbins = count($bins);
-        $out = ["# bin{$separator}frequency"];
+        $out = array("# bin{$separator}frequency");
         foreach ($bins as $bin => $freq) {
             $out[] = "{$bin}{$separator}{$freq}";
         }
@@ -329,12 +329,12 @@ class Histogram extends AbstractHistogram
     public function _filterBins($mode)
     {
 
-        $map = [
+        $map = array(
             self::HISTOGRAM_MID_BINS => "mid",
             self::HISTOGRAM_LO_BINS => "low",
             self::HISTOGRAM_HI_BINS => "high",
-        ];
-        $filtered = [];
+        );
+        $filtered = array();
         foreach ($this->_bins as $bin) {
             $filtered["{$bin[$map[$mode]]}"] = $bin["count"];
         }
@@ -353,7 +353,7 @@ class Histogram extends AbstractHistogram
     public function _histogramData()
     {
 
-        $data = [];
+        $data = array();
         foreach ($this->_data as $val) {
             if ($val < $this->_rangeLow || $val > $this->_rangeHigh) {
                 continue;

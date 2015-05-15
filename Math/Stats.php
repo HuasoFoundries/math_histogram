@@ -1,5 +1,5 @@
 <?php
-namespace Math;
+namespace PEAR\Math;
 
 include_once 'PEAR.php';
 

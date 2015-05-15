@@ -6,13 +6,11 @@
 	}],
 	"autoload": {
 		"psr-0": {
-			"Math": "./"
+			"PEAR\\Math": "./"
 		}
 	},
 	"description": "More info available on: http://pear.php.net/package/Math_Stats",
-	"include-path": [
-		"./"
-	],
+
 	"license": "PHP",
 	"name": "pear/math_stats",
 	"support": {

@@ -171,7 +171,7 @@ class Stats
     {
 
         if (!is_array($arr)) {
-            return \PEAR::raiseError('invalid data, an array of numeric data was expected');
+            throw new \PEAR_Exception('invalid data, an array of numeric data was expected');
         }
         $this->_data = null;
         $this->_dataExpanded = null;
@@ -201,7 +201,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE && $expanded) {
             return $this->_dataExpanded;
@@ -227,7 +227,7 @@ class Stats
             $this->_nullOption = $nullOption;
             return true;
         } else {
-            return \PEAR::raiseError('invalid null handling option expecting: ' .
+            throw new \PEAR_Exception('invalid null handling option expecting: ' .
                 'STATS_REJECT_NULL, STATS_IGNORE_NULL or STATS_USE_NULL_AS_ZERO');
         }
     }
@@ -246,16 +246,18 @@ class Stats
     public function studentize()
     {
 
-        $mean = $this->mean();
-        if (\PEAR::isError($mean)) {
+        try {
+            $mean = $this->mean();
+        } catch (\PEAR_Exception $e) {
             return $mean;
         }
-        $std = $this->stDev();
-        if (\PEAR::isError($std)) {
+        try {
+            $std = $this->stDev();
+        } catch (\PEAR_Exception $e) {
             return $std;
         }
         if ($std == 0) {
-            return \PEAR::raiseError('cannot studentize data, standard deviation is zero.');
+            throw new \PEAR_Exception('cannot studentize data, standard deviation is zero.');
         }
         $arr = array();
         if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
@@ -284,8 +286,9 @@ class Stats
     public function center()
     {
 
-        $mean = $this->mean();
-        if (\PEAR::isError($mean)) {
+        try {
+            $mean = $this->mean();
+        } catch (\PEAR_Exception $e) {
             return $mean;
         }
         $arr = array();
@@ -318,7 +321,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
 
         if ($mode == self::STATS_BASIC) {
@@ -327,7 +330,7 @@ class Stats
         } elseif ($mode == self::STATS_FULL) {
             return $this->calcFull($returnErrorObject);
         } else {
-            return \PEAR::raiseError('incorrect mode, expected STATS_BASIC or STATS_FULL');
+            throw new \PEAR_Exception('incorrect mode, expected STATS_BASIC or STATS_FULL');
         }
     }
 
@@ -343,20 +346,17 @@ class Stats
      */
     public function calcBasic($returnErrorObject = true)
     {
-
-        $indices['min'] = $this->__format($this->min(), $returnErrorObject);
-
-        $indices['max'] = $this->__format($this->max(), $returnErrorObject);
-        $indices['sum'] = $this->__format($this->sum(), $returnErrorObject);
-        $indices['sum2'] = $this->__format($this->sum2(), $returnErrorObject);
-
-        $indices['count'] = $this->__format($this->count(), $returnErrorObject);
-        $indices['mean'] = $this->__format($this->mean(), $returnErrorObject);
-        $indices['stdev'] = $this->__format($this->stDev(), $returnErrorObject);
-        $indices['variance'] = $this->__format($this->variance(), $returnErrorObject);
-        $indices['range'] = $this->__format($this->range(), $returnErrorObject);
-
-        return $indices;
+        return array(
+            'min' => $this->__format($this->min(), $returnErrorObject),
+            'max' => $this->__format($this->max(), $returnErrorObject),
+            'sum' => $this->__format($this->sum(), $returnErrorObject),
+            'sum2' => $this->__format($this->sum2(), $returnErrorObject),
+            'count' => $this->__format($this->count(), $returnErrorObject),
+            'mean' => $this->__format($this->mean(), $returnErrorObject),
+            'stdev' => $this->__format($this->stDev(), $returnErrorObject),
+            'variance' => $this->__format($this->variance(), $returnErrorObject),
+            'range' => $this->__format($this->range(), $returnErrorObject),
+        );
 
     }
 
@@ -430,7 +430,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
 
         if (!array_key_exists('min', $this->_calculatedValues)) {
@@ -459,7 +459,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         if (!array_key_exists('max', $this->_calculatedValues)) {
             if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
@@ -486,12 +486,13 @@ class Stats
     {
 
         if (!array_key_exists('sum', $this->_calculatedValues)) {
-            $sum = $this->sumN(1);
-            if (\PEAR::isError($sum)) {
-                return $sum;
-            } else {
+            try {
+                $sum = $this->sumN(1);
                 $this->_calculatedValues['sum'] = $sum;
+            } catch (\PEAR_Exception $e) {
+                return $sum;
             }
+
         }
         return $this->_calculatedValues['sum'];
     }
@@ -510,11 +511,11 @@ class Stats
     {
 
         if (!array_key_exists('sum2', $this->_calculatedValues)) {
-            $sum2 = $this->sumN(2);
-            if (\PEAR::isError($sum2)) {
-                return $sum2;
-            } else {
+            try {
+                $sum2 = $this->sumN(2);
                 $this->_calculatedValues['sum2'] = $sum2;
+            } catch (\PEAR_Exception $e) {
+                return $sum2;
             }
         }
         return $this->_calculatedValues['sum2'];
@@ -535,7 +536,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         $sumN = 0;
         if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
@@ -564,12 +565,13 @@ class Stats
     {
 
         if (!array_key_exists('product', $this->_calculatedValues)) {
-            $product = $this->productN(1);
-            if (\PEAR::isError($product)) {
-                return $product;
-            } else {
+            try {
+                $product = $this->productN(1);
                 $this->_calculatedValues['product'] = $product;
+            } catch (\PEAR_Exception $e) {
+                return $product;
             }
+
         }
         return $this->_calculatedValues['product'];
     }
@@ -589,7 +591,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         $prodN = 1.0;
         $partial = array();
@@ -646,7 +648,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         if (!array_key_exists('count', $this->_calculatedValues)) {
             if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
@@ -673,15 +675,18 @@ class Stats
     {
 
         if (!array_key_exists('mean', $this->_calculatedValues)) {
-            $sum = $this->sum();
-            if (\PEAR::isError($sum)) {
+            try {
+                $sum = $this->sum();
+                try {
+                    $count = $this->count();
+                } catch (\PEAR_Exception $e) {
+                    return $count;
+                }
+                $this->_calculatedValues['mean'] = $sum / $count;
+            } catch (\PEAR_Exception $e) {
                 return $sum;
             }
-            $count = $this->count();
-            if (\PEAR::isError($count)) {
-                return $count;
-            }
-            $this->_calculatedValues['mean'] = $sum / $count;
+
         }
         return $this->_calculatedValues['mean'];
     }
@@ -696,15 +701,19 @@ class Stats
     {
 
         if (!array_key_exists('range', $this->_calculatedValues)) {
-            $min = $this->min();
-            if (\PEAR::isError($min)) {
+            try {
+                $min = $this->min();
+                try {
+                    $max = $this->max();
+                } catch (\PEAR_Exception $e) {
+                    return $max;
+                }
+                $this->_calculatedValues['range'] = $max - $min;
+
+            } catch (\PEAR_Exception $e) {
                 return $min;
             }
-            $max = $this->max();
-            if (\PEAR::isError($max)) {
-                return $max;
-            }
-            $this->_calculatedValues['range'] = $max - $min;
+
         }
         return $this->_calculatedValues['range'];
 
@@ -724,10 +733,12 @@ class Stats
     {
 
         if (!array_key_exists('variance', $this->_calculatedValues)) {
-            $variance = $this->__calcVariance();
-            if (\PEAR::isError($variance)) {
+            try {
+                $variance = $this->__calcVariance();
+            } catch (\PEAR_Exception $e) {
                 return $variance;
             }
+
             $this->_calculatedValues['variance'] = $variance;
         }
         return $this->_calculatedValues['variance'];
@@ -746,10 +757,12 @@ class Stats
     {
 
         if (!array_key_exists('stDev', $this->_calculatedValues)) {
-            $variance = $this->variance();
-            if (\PEAR::isError($variance)) {
+            try {
+                $variance = $this->variance();
+            } catch (\PEAR_Exception $e) {
                 return $variance;
             }
+
             $this->_calculatedValues['stDev'] = sqrt($variance);
         }
         return $this->_calculatedValues['stDev'];
@@ -788,11 +801,12 @@ class Stats
      */
     public function stDevWithMean($mean)
     {
-
-        $varianceWM = $this->varianceWithMean($mean);
-        if (\PEAR::isError($varianceWM)) {
+        try {
+            $varianceWM = $this->varianceWithMean($mean);
+        } catch (\PEAR_Exception $e) {
             return $varianceWM;
         }
+
         return sqrt($varianceWM);
     }
 
@@ -811,10 +825,12 @@ class Stats
     {
 
         if (!array_key_exists('absDev', $this->_calculatedValues)) {
-            $absDev = $this->__calcAbsoluteDeviation();
-            if (\PEAR::isError($absDev)) {
+            try {
+                $absDev = $this->__calcAbsoluteDeviation();
+            } catch (\PEAR_Exception $e) {
                 return $absDev;
             }
+
             $this->_calculatedValues['absDev'] = $absDev;
         }
         return $this->_calculatedValues['absDev'];
@@ -860,18 +876,22 @@ class Stats
     {
 
         if (!array_key_exists('skewness', $this->_calculatedValues)) {
-            $count = $this->count();
-            if (\PEAR::isError($count)) {
+            try {
+                $count = $this->count();
+                try {
+                    $stDev = $this->stDev();
+                    try {
+                        $sumdiff3 = $this->__sumdiff(3);
+                    } catch (\PEAR_Exception $e) {
+                        return $sumdiff3;
+                    }
+                } catch (\PEAR_Exception $e) {
+                    return $stDev;
+                }
+            } catch (\PEAR_Exception $e) {
                 return $count;
             }
-            $stDev = $this->stDev();
-            if (\PEAR::isError($stDev)) {
-                return $stDev;
-            }
-            $sumdiff3 = $this->__sumdiff(3);
-            if (\PEAR::isError($sumdiff3)) {
-                return $sumdiff3;
-            }
+
             $this->_calculatedValues['skewness'] = ($sumdiff3 / ($count * pow($stDev, 3)));
         }
         return $this->_calculatedValues['skewness'];
@@ -899,18 +919,23 @@ class Stats
     {
 
         if (!array_key_exists('kurtosis', $this->_calculatedValues)) {
-            $count = $this->count();
-            if (\PEAR::isError($count)) {
+
+            try {
+                $count = $this->count();
+                try {
+                    $stDev = $this->stDev();
+                    try {
+                        $sumdiff4 = $this->__sumdiff(4);
+                    } catch (\PEAR_Exception $e) {
+                        return $sumdiff4;
+                    }
+                } catch (\PEAR_Exception $e) {
+                    return $stDev;
+                }
+            } catch (\PEAR_Exception $e) {
                 return $count;
             }
-            $stDev = $this->stDev();
-            if (\PEAR::isError($stDev)) {
-                return $stDev;
-            }
-            $sumdiff4 = $this->__sumdiff(4);
-            if (\PEAR::isError($sumdiff4)) {
-                return $sumdiff4;
-            }
+
             $this->_calculatedValues['kurtosis'] = ($sumdiff4 / ($count * pow($stDev, 4))) - 3;
         }
         return $this->_calculatedValues['kurtosis'];
@@ -933,7 +958,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         if (!array_key_exists('median', $this->_calculatedValues)) {
             if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
@@ -941,10 +966,12 @@ class Stats
             } else {
                 $arr = &$this->_data;
             }
-            $n = $this->count();
-            if (\PEAR::isError($n)) {
+            try {
+                $n = $this->count();
+            } catch (\PEAR_Exception $e) {
                 return $n;
             }
+
             $h = intval($n / 2);
             if ($n % 2 == 0) {
                 $median = ($arr[$h] + $arr[$h - 1]) / 2;
@@ -971,7 +998,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         if (!array_key_exists('mode', $this->_calculatedValues)) {
             if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
@@ -1017,14 +1044,17 @@ class Stats
     {
 
         if (!array_key_exists('midrange', $this->_calculatedValues)) {
-            $min = $this->min();
-            if (\PEAR::isError($min)) {
+            try {
+                $min = $this->min();
+                try {
+                    $max = $this->max();
+                } catch (\PEAR_Exception $e) {
+                    return $max;
+                }
+            } catch (\PEAR_Exception $e) {
                 return $min;
             }
-            $max = $this->max();
-            if (\PEAR::isError($max)) {
-                return $max;
-            }
+
             $this->_calculatedValues['midrange'] = (($max + $min) / 2);
         }
         return $this->_calculatedValues['midrange'];
@@ -1044,12 +1074,14 @@ class Stats
     {
 
         if (!array_key_exists('geometricMean', $this->_calculatedValues)) {
-            $count = $this->count();
-            if (\PEAR::isError($count)) {
+            try {
+                $count = $this->count();
+            } catch (\PEAR_Exception $e) {
                 return $count;
             }
-            $prod = $this->product();
-            if (\PEAR::isError($prod)) {
+            try {
+                $prod = $this->product();
+            } catch (\PEAR_Exception $e) {
                 return $prod;
             }
             if (is_array($prod)) {
@@ -1063,7 +1095,7 @@ class Stats
                     return 0.0;
                 }
                 if ($prod < 0) {
-                    return \PEAR::raiseError('The product of the data set is negative, geometric mean undefined.');
+                    throw new \PEAR_Exception('The product of the data set is negative, geometric mean undefined.');
                 }
                 $this->_calculatedValues['geometricMean'] = pow($prod, 1 / $count);
             }
@@ -1084,18 +1116,19 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         if (!array_key_exists('harmonicMean', $this->_calculatedValues)) {
-            $count = $this->count();
-            if (\PEAR::isError($count)) {
+            try {
+                $count = $this->count();
+            } catch (\PEAR_Exception $e) {
                 return $count;
             }
             $invsum = 0.0;
             if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
                 foreach ($this->_data as $val => $freq) {
                     if ($val == 0) {
-                        return \PEAR::raiseError('cannot calculate a ' .
+                        throw new \PEAR_Exception('cannot calculate a ' .
                             'harmonic mean with data values of zero.');
                     }
                     $invsum += $freq / $val;
@@ -1103,7 +1136,7 @@ class Stats
             } else {
                 foreach ($this->_data as $val) {
                     if ($val == 0) {
-                        return \PEAR::raiseError('cannot calculate a ' .
+                        throw new \PEAR_Exception('cannot calculate a ' .
                             'harmonic mean with data values of zero.');
                     }
                     $invsum += 1 / $val;
@@ -1131,22 +1164,24 @@ class Stats
     {
 
         if (!is_int($n) || $n < 1) {
-            return \PEAR::raiseError('moment must be a positive integer >= 1.');
+            throw new \PEAR_Exception('moment must be a positive integer >= 1.');
         }
 
         if ($n == 1) {
             return 0;
         }
-        $count = $this->count();
-        if (\PEAR::isError($count)) {
+        try {
+            $count = $this->count();
+        } catch (\PEAR_Exception $e) {
             return $count;
         }
         if ($count == 0) {
-            return \PEAR::raiseError("Cannot calculate {$n}th sample moment, " .
+            throw new \PEAR_Exception("Cannot calculate {$n}th sample moment, " .
                 'there are zero data entries');
         }
-        $sum = $this->__sumdiff($n);
-        if (\PEAR::isError($sum)) {
+        try {
+            $sum = $this->__sumdiff($n);
+        } catch (\PEAR_Exception $e) {
             return $sum;
         }
         return ($sum / $count);
@@ -1169,19 +1204,21 @@ class Stats
     {
 
         if (!is_int($n) || $n < 1) {
-            return \PEAR::raiseError('moment must be a positive integer >= 1.');
+            throw new \PEAR_Exception('moment must be a positive integer >= 1.');
         }
 
-        $count = $this->count();
-        if (\PEAR::isError($count)) {
+        try {
+            $count = $this->count();
+        } catch (\PEAR_Exception $e) {
             return $count;
         }
         if ($count == 0) {
-            return \PEAR::raiseError("Cannot calculate {$n}th raw moment, " .
+            throw new \PEAR_Exception("Cannot calculate {$n}th raw moment, " .
                 'there are zero data entries.');
         }
-        $sum = $this->sumN($n);
-        if (\PEAR::isError($sum)) {
+        try {
+            $sum = $this->sumN($n);
+        } catch (\PEAR_Exception $e) {
             return $sum;
         }
         return ($sum / $count);
@@ -1203,16 +1240,19 @@ class Stats
     {
 
         if (!array_key_exists('coeffOfVariation', $this->_calculatedValues)) {
-            $mean = $this->mean();
-            if (\PEAR::isError($mean)) {
+            try {
+                $mean = $this->mean();
+            } catch (\PEAR_Exception $e) {
                 return $mean;
             }
+
             if ($mean == 0.0) {
-                return \PEAR::raiseError('cannot calculate the coefficient ' .
+                throw new \PEAR_Exception('cannot calculate the coefficient ' .
                     'of variation, mean of sample is zero');
             }
-            $stDev = $this->stDev();
-            if (\PEAR::isError($stDev)) {
+            try {
+                $stDev = $this->stDev();
+            } catch (\PEAR_Exception $e) {
                 return $stDev;
             }
 
@@ -1242,12 +1282,14 @@ class Stats
     {
 
         if (!array_key_exists('stdErrorOfMean', $this->_calculatedValues)) {
-            $count = $this->count();
-            if (\PEAR::isError($count)) {
+            try {
+                $count = $this->count();
+            } catch (\PEAR_Exception $e) {
                 return $count;
             }
-            $stDev = $this->stDev();
-            if (\PEAR::isError($stDev)) {
+            try {
+                $stDev = $this->stDev();
+            } catch (\PEAR_Exception $e) {
                 return $stDev;
             }
             $this->_calculatedValues['stdErrorOfMean'] = $stDev / sqrt($count);
@@ -1269,7 +1311,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         if (!array_key_exists('frequency', $this->_calculatedValues)) {
             if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
@@ -1302,18 +1344,23 @@ class Stats
     {
 
         if (!array_key_exists('quartiles', $this->_calculatedValues)) {
-            $q1 = $this->percentile(25);
-            if (\PEAR::isError($q1)) {
+            try {
+                $q1 = $this->percentile(25);
+                try {
+                    $q2 = $this->percentile(50);
+                    try {
+                        $q3 = $this->percentile(75);
+                    } catch (\PEAR_Exception $e) {
+                        return $q3;
+                    }
+                } catch (\PEAR_Exception $e) {
+                    return $q2;
+                }
+
+            } catch (\PEAR_Exception $e) {
                 return $q1;
             }
-            $q2 = $this->percentile(50);
-            if (\PEAR::isError($q2)) {
-                return $q2;
-            }
-            $q3 = $this->percentile(75);
-            if (\PEAR::isError($q3)) {
-                return $q3;
-            }
+
             $this->_calculatedValues['quartiles'] = array(
                 '25' => $q1,
                 '50' => $q2,
@@ -1340,8 +1387,9 @@ class Stats
     {
 
         if (!array_key_exists('interquartileMean', $this->_calculatedValues)) {
-            $quart = $this->quartiles();
-            if (\PEAR::isError($quart)) {
+            try {
+                $quart = $this->quartiles();
+            } catch (\PEAR_Exception $e) {
                 return $quart;
             }
             $q3 = $quart['75'];
@@ -1355,7 +1403,7 @@ class Stats
                 }
             }
             if ($n == 0) {
-                return \PEAR::raiseError('error calculating interquartile mean, ' .
+                throw new \PEAR_Exception('error calculating interquartile mean, ' .
                     'empty interquartile range of values.');
             }
             $this->_calculatedValues['interquartileMean'] = $sum / $n;
@@ -1380,8 +1428,9 @@ class Stats
     {
 
         if (!array_key_exists('interquartileRange', $this->_calculatedValues)) {
-            $quart = $this->quartiles();
-            if (\PEAR::isError($quart)) {
+            try {
+                $quart = $this->quartiles();
+            } catch (\PEAR_Exception $e) {
                 return $quart;
             }
             $q3 = $quart['75'];
@@ -1407,8 +1456,9 @@ class Stats
     {
 
         if (!array_key_exists('quartileDeviation', $this->_calculatedValues)) {
-            $iqr = $this->interquartileRange();
-            if (\PEAR::isError($iqr)) {
+            try {
+                $iqr = $this->interquartileRange();
+            } catch (\PEAR_Exception $e) {
                 return $iqr;
             }
             $this->_calculatedValues['quartileDeviation'] = $iqr / 2;
@@ -1432,8 +1482,9 @@ class Stats
     {
 
         if (!array_key_exists('quartileVariationCoefficient', $this->_calculatedValues)) {
-            $quart = $this->quartiles();
-            if (\PEAR::isError($quart)) {
+            try {
+                $quart = $this->quartiles();
+            } catch (\PEAR_Exception $e) {
                 return $quart;
             }
             $q3 = $quart['75'];
@@ -1462,8 +1513,9 @@ class Stats
     {
 
         if (!array_key_exists('quartileSkewnessCoefficient', $this->_calculatedValues)) {
-            $quart = $this->quartiles();
-            if (\PEAR::isError($quart)) {
+            try {
+                $quart = $this->quartiles();
+            } catch (\PEAR_Exception $e) {
                 return $quart;
             }
             $q3 = $quart['75'];
@@ -1502,11 +1554,12 @@ class Stats
      */
     public function percentile($p)
     {
-
-        $count = $this->count();
-        if (\PEAR::isError($count)) {
+        try {
+            $count = $this->count();
+        } catch (\PEAR_Exception $e) {
             return $count;
         }
+
         if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
             $data = &$this->_dataExpanded;
         } else {
@@ -1545,13 +1598,15 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         if (is_null($mean)) {
-            $mean = $this->mean();
-            if (\PEAR::isError($mean)) {
+            try {
+                $mean = $this->mean();
+            } catch (\PEAR_Exception $e) {
                 return $mean;
             }
+
         }
         $sdiff = 0;
         if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
@@ -1581,18 +1636,21 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
-        $sumdiff2 = $this->__sumdiff(2, $mean);
-        if (\PEAR::isError($sumdiff2)) {
+        try {
+            $sumdiff2 = $this->__sumdiff(2, $mean);
+            try {
+                $count = $this->count();
+            } catch (\PEAR_Exception $e) {
+                return $count;
+            }
+        } catch (\PEAR_Exception $e) {
             return $sumdiff2;
         }
-        $count = $this->count();
-        if (\PEAR::isError($count)) {
-            return $count;
-        }
+
         if ($count == 1) {
-            return \PEAR::raiseError('cannot calculate variance of a singe data point');
+            throw new \PEAR_Exception('cannot calculate variance of a singe data point');
         }
         return ($sumdiff2 / ($count - 1));
     }
@@ -1611,16 +1669,19 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
-        $count = $this->count();
-        if (\PEAR::isError($count)) {
+        try {
+            $count = $this->count();
+            try {
+                $sumabsdev = $this->__sumabsdev($mean);
+            } catch (\PEAR_Exception $e) {
+                return $sumabsdev;
+            }
+        } catch (\PEAR_Exception $e) {
             return $count;
         }
-        $sumabsdev = $this->__sumabsdev($mean);
-        if (\PEAR::isError($sumabsdev)) {
-            return $sumabsdev;
-        }
+
         return $sumabsdev / $count;
     }
 
@@ -1638,7 +1699,7 @@ class Stats
     {
 
         if ($this->_data == null) {
-            return \PEAR::raiseError('data has not been set');
+            throw new \PEAR_Exception('data has not been set');
         }
         if (is_null($mean)) {
             $mean = $this->mean();
@@ -1671,7 +1732,7 @@ class Stats
     public function __format($v, $useErrorObject = true)
     {
 
-        if (\PEAR::isError($v) && $useErrorObject == false) {
+        if (is_a($v, '\PEAR_Exception') && $useErrorObject == false) {
             return $v->getMessage();
         } else {
             return $v;
@@ -1713,7 +1774,7 @@ class Stats
                         break;
                     case self::STATS_REJECT_NULL:
                     default:
-                        return \PEAR::raiseError('data rejected, contains NULL values');
+                        throw new \PEAR_Exception('data rejected, contains NULL values');
                         break;
                 }
             }

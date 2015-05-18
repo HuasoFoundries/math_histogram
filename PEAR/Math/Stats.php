@@ -1,8 +1,6 @@
 <?php
 namespace PEAR\Math;
 
-include_once 'PEAR.php';
-
 /**
  * @package Math_Stats
  * @author Jesus M. Castagnetto <jmcastagnetto@php.net>

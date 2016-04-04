@@ -1,5 +1,10 @@
 # Math_Histogram
 
+[![Packagist](https://img.shields.io/packagist/dm/huasofoundries/math_histogram.svg)](https://packagist.org/packages/huasofoundries/math_histogram)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/build.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/build-status/master)
+
+
+
 This Package is a mix of of PEAR's [Math_Stats](http://pear.php.net/package/Math_Stats) and [Math_Histogram](http://pear.php.net/package/Math_Histogram)
 
 To test, run:

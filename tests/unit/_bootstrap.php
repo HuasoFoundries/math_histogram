@@ -524,7 +524,7 @@ $GLOBALS['Mode_out1'] =[2];
 
 $GLOBALS['Mode_out2'] =[0.6268];
 
-$GLOBALS['Mode_out3'] =[0 , 0.6268];
+$GLOBALS['Mode_out3'] =[0,0.6268];
 
 $GLOBALS['Mode_out4'] = [ 2.4];
 

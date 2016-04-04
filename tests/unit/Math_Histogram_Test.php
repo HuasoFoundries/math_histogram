@@ -23,7 +23,7 @@ class Math_Histogram_Test extends \Codeception\TestCase\Test
     protected function _before()
     {
      // create an instance 
-        $this->h = new \PEAR\Histogram\Histogram();
+        $this->h = new \HuasoFoundries\Histogram\Histogram();
 
 
    
@@ -38,11 +38,11 @@ class Math_Histogram_Test extends \Codeception\TestCase\Test
     public function testcummulative()
     {
         // let's do a cummulative histogram
-        $this->h->setType(\PEAR\Histogram\AbstractHistogram::HISTOGRAM_CUMMULATIVE);
+        $this->h->setType(\HuasoFoundries\Histogram\AbstractHistogram::HISTOGRAM_CUMMULATIVE);
         $this->h->setData($this->vals);
         $this->h->calculate();
         print_r($this->h->getHistogramInfo());
-        print_r($this->h->getBins(\PEAR\Histogram\AbstractHistogram::HISTOGRAM_HI_BINS));
+        print_r($this->h->getBins(\HuasoFoundries\Histogram\AbstractHistogram::HISTOGRAM_HI_BINS));
         echo $this->h->printHistogram();
         echo "\n=====\n";
     }
@@ -56,17 +56,17 @@ class Math_Histogram_Test extends \Codeception\TestCase\Test
             $data[] = floatval(trim($item));
 
         // let's do a simple histogram
-        $this->h->setType(\PEAR\Histogram\AbstractHistogram::HISTOGRAM_SIMPLE);
+        $this->h->setType(\HuasoFoundries\Histogram\AbstractHistogram::HISTOGRAM_SIMPLE);
         // and set new bin options
         $this->h->setBinOptions(20,1.7,2.7);
         // then set a the big data set
         $this->h->setData($data);
 
         // and calculate using full stats
-        $this->h->calculate(\PEAR\Math\Stats::STATS_FULL);
+        $this->h->calculate(\HuasoFoundries\Math\Stats::STATS_FULL);
         print_r($this->h->getHistogramInfo());
-        print_r($this->h->getBins(\PEAR\Histogram\AbstractHistogram::HISTOGRAM_MID_BINS));
-        echo $this->h->printHistogram(\PEAR\Histogram\AbstractHistogram::HISTOGRAM_MID_BINS);
+        print_r($this->h->getBins(\HuasoFoundries\Histogram\AbstractHistogram::HISTOGRAM_MID_BINS));
+        echo $this->h->printHistogram(\HuasoFoundries\Histogram\AbstractHistogram::HISTOGRAM_MID_BINS);
     }
 
 

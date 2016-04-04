@@ -1,5 +1,5 @@
 <?php
-namespace PEAR\Histogram;
+namespace HuasoFoundries\Histogram;
 
 /**
  * Abstract class defining common properties and methods for

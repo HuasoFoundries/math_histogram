@@ -1,8 +1,8 @@
 <?php
-namespace PEAR\Histogram;
+namespace HuasoFoundries\Histogram;
 
 /**
- * Class to generate 3D histograms from bi-dimensional numeric
+ * Class to generate 4D histograms from tri-dimensional numeric
  * arrays.
  *
  * Originally this class was part of NumPHP (Numeric PHP package)
@@ -12,11 +12,11 @@ namespace PEAR\Histogram;
  * @access  public
  * @package Math_Histogram
  */
-class Histogram3D extends AbstractHistogram
+class Histogram4D extends AbstractHistogram
 {
 
     /**
-     * Constructor for Math_Histogram3D
+     * Constructor for Math_Histogram4D
      *
      * @access  public
      * @param   optional    int $type   one of HISTOGRAM_SIMPLE or HISTOGRAM_CUMMULATIVE
@@ -27,26 +27,24 @@ class Histogram3D extends AbstractHistogram
      * @see Math_AbstractHistogram::setType()
      * @see Math_AbstractHistogram
      */
-
     public function __construct($type = self::HISTOGRAM_SIMPLE, $binOptions = "")
     {
 
         $this->setType($type);
-        try {
+         try {
             $this->setBinOptions($binOptions);
         } catch (\PEAR_Exception $e) {
             // Falling back to default options
         }
     }
 
-/**
- * Sets the binning options. Overrides parent's method.
- *
- * @access  public
- * @param   array $binOptions  an array of options for binning the data
- * @return  void
- */
-
+    /**
+     * Sets the binning options. Overrides parent's method.
+     *
+     * @access  public
+     * @param   array $binOptions  an array of options for binning the data
+     * @return  void
+     */
     public function setBinOptions($binOptions)
     {
 
@@ -60,7 +58,7 @@ class Histogram3D extends AbstractHistogram
 
     /**
      * Sets the data to be processed. The data will be validated to
-     * be a simple bi-dimensional numerical array
+     * be a simple tri-dimensional numerical array
      *
      * @access  public
      * @param   array   $data   the numeric array
@@ -82,16 +80,17 @@ class Histogram3D extends AbstractHistogram
         $this->_data = $data;
         list($xMin, $xMax) = $this->_getMinMax('x');
         list($yMin, $yMax) = $this->_getMinMax('y');
+        list($zMin, $zMax) = $this->_getMinMax('z');
         if (is_null($this->_rangeLow)) {
-            $this->_rangeLow = array('x' => $xMin, 'y' => $yMin);
+            $this->_rangeLow = array('x' => $xMin, 'y' => $yMin, 'z' => $zMin);
         }
 
         if (is_null($this->_rangeHigh)) {
-            $this->_rangeHigh = array('x' => $xMax, 'y' => $yMax);
+            $this->_rangeHigh = array('x' => $xMax, 'y' => $yMax, 'z' => $zMax);
         }
 
         if (is_null($this->_nbins)) {
-            $this->_nbins = array('x' => 10, 'y' => 10);
+            $this->_nbins = array('x' => 10, 'y' => 10, 'z' => 10);
         }
 
         return true;
@@ -106,19 +105,19 @@ class Histogram3D extends AbstractHistogram
      *
      * @see Math_Stats
      */
-    public function calculate($statsMode = \PEAR\Math\Stats::STATS_BASIC)
+    public function calculate($statsMode = \HuasoFoundries\Math\Stats::STATS_BASIC)
     {
 
         $this->_bins = array();
-        $this->_stats = array('x' => new \PEAR\Math\Stats(), 'y' => new \PEAR\Math\Stats());
+        $this->_stats = array('x' => new \HuasoFoundries\Math\Stats(), 'y' => new \HuasoFoundries\Math\Stats(), 'z' => new \HuasoFoundries\Math\Stats());
         $this->_statsMode = $statsMode;
         $deltaX = ($this->_rangeHigh['x'] - $this->_rangeLow['x']) / $this->_nbins['x'];
         $deltaY = ($this->_rangeHigh['y'] - $this->_rangeLow['y']) / $this->_nbins['y'];
+        $deltaZ = ($this->_rangeHigh['z'] - $this->_rangeLow['z']) / $this->_nbins['z'];
         $data = $this->_histogramData();
-        //$dataX = $this->_data['x'];
-        //$dataY = $this->_data['y'];
         $dataX = $data['x'];
         $dataY = $data['y'];
+        $dataZ = $data['z'];
         $ignoreList = array();
         $cumm = 0;
         $nData = count($dataX);
@@ -132,47 +131,61 @@ class Histogram3D extends AbstractHistogram
                 $hiYBin = $loYBin + $deltaY;
                 $yBin = array('low' => $loYBin, 'high' => $hiYBin,
                     'mid' => ($hiYBin + $loYBin) / 2);
-                $bin = array('x' => $xBin, 'y' => $yBin);
-                $freq = 0;
-                for ($k = 0; $k < $nData; $k++) {
-                    if (!empty($ignoreList) && in_array($k, $ignoreList)) {
-                        continue;
-                    }
+                for ($m = 0; $m < $this->_nbins['z']; $m++) {
+                    $loZBin = $this->_rangeLow['z'] + $m * $deltaZ;
+                    $hiZBin = $loZBin + $deltaZ;
+                    $zBin = array('low' => $loZBin, 'high' => $hiZBin,
+                        'mid' => ($hiZBin + $loZBin) / 2);
+                    $bin = array('x' => $xBin, 'y' => $yBin, 'z' => $zBin);
+                    $freq = 0;
+                    for ($k = 0; $k < $nData; $k++) {
+                        if (!empty($ignoreList) && in_array($k, $ignoreList)) {
+                            continue;
+                        }
 
-                    $valueX = $dataX[$k];
-                    $valueY = $dataY[$k];
-                    $inRangeX = $inRangeY = false;
-                    if ($i == 0) {
-                        $inRangeX = ($loXBin <= $valueX && $hiXBin >= $valueX);
+                        $valueX = $dataX[$k];
+                        $valueY = $dataY[$k];
+                        $valueZ = $dataZ[$k];
+                        $inRangeX = $inRangeY = $inRangeZ = false;
+                        if ($i == 0) {
+                            $inRangeX = ($loXBin <= $valueX && $hiXBin >= $valueX);
+                        } else {
+                            $inRangeX = ($loXBin < $valueX && $hiXBin >= $valueX);
+                        }
+
+                        if ($j == 0) {
+                            $inRangeY = ($loYBin <= $valueY && $hiYBin >= $valueY);
+                        } else {
+                            $inRangeY = ($loYBin < $valueY && $hiYBin >= $valueY);
+                        }
+
+                        if ($m == 0) {
+                            $inRangeZ = ($loZBin <= $valueZ && $hiZBin >= $valueZ);
+                        } else {
+                            $inRangeZ = ($loZBin < $valueZ && $hiZBin >= $valueZ);
+                        }
+
+                        if ($inRangeX && $inRangeY && $inRangeZ) {
+                            $freq++;
+                            $cumm++;
+                            $ignoreList[] = $k;
+                        }
+                    }
+                    if ($this->_type == self::HISTOGRAM_CUMMULATIVE) {
+                        if ($freq > 0) {
+                            $bin['count'] = $freq + $cumm - 1;
+                        } else {
+                            $bin['count'] = 0;
+                        }
+
                     } else {
-                        $inRangeX = ($loXBin < $valueX && $hiXBin >= $valueX);
+                        $bin['count'] = $freq;
                     }
-
-                    if ($j == 0) {
-                        $inRangeY = ($loYBin <= $valueY && $hiYBin >= $valueY);
-                    } else {
-                        $inRangeY = ($loYBin < $valueY && $hiYBin >= $valueY);
-                    }
-
-                    if ($inRangeX && $inRangeY) {
-                        $freq++;
-                        $cumm++;
-                        $ignoreList[] = $k;
-                    }
+                    $bin['xbin'] = $i;
+                    $bin['ybin'] = $j;
+                    $bin['zbin'] = $m;
+                    $this->_bins[] = $bin;
                 }
-                if ($this->_type == self::HISTOGRAM_CUMMULATIVE) {
-                    if ($freq > 0) {
-                        $bin['count'] = $freq + $cumm - 1;
-                    } else {
-                        $bin['count'] = 0;
-                    }
-
-                } else {
-                    $bin['count'] = $freq;
-                }
-                $bin['xbin'] = $i;
-                $bin['ybin'] = $j;
-                $this->_bins[] = $bin;
             }
         }
     }
@@ -192,8 +205,10 @@ class Histogram3D extends AbstractHistogram
 
         $this->_stats['x']->setData($this->_data['x']);
         $this->_stats['y']->setData($this->_data['y']);
+        $this->_stats['z']->setData($this->_data['z']);
         return array('x' => $this->_stats['x']->calc($this->_statsMode),
-            'y' => $this->_stats['y']->calc($this->_statsMode));
+            'y' => $this->_stats['y']->calc($this->_statsMode),
+            'z' => $this->_stats['z']->calc($this->_statsMode));
     }
 
     /**
@@ -212,8 +227,10 @@ class Histogram3D extends AbstractHistogram
         $data = $this->_histogramData();
         $this->_stats['x']->setData($data['x']);
         $this->_stats['y']->setData($data['y']);
+        $this->_stats['z']->setData($data['z']);
         return array('x' => $this->_stats['x']->calc($this->_statsMode),
-            'y' => $this->_stats['y']->calc($this->_statsMode));
+            'y' => $this->_stats['y']->calc($this->_statsMode),
+            'z' => $this->_stats['z']->calc($this->_statsMode));
     }
 
     /**
@@ -235,7 +252,7 @@ class Histogram3D extends AbstractHistogram
         
 
         $nbins = count($bins);
-        $out = array("# x_bin{$separator}y_bin{$separator}frequency");
+        $out = array("# x_bin{$separator}y_bin{$separator}z_bin{$separator}frequency");
         for ($i = 0; $i < $nbins; $i++) {
             $out[] = implode($separator, $bins[$i]);
         }
@@ -276,6 +293,7 @@ class Histogram3D extends AbstractHistogram
         foreach ($this->_bins as $bin) {
             $tmp['x'] = $bin['x'][$map[$mode]];
             $tmp['y'] = $bin['y'][$map[$mode]];
+            $tmp['z'] = $bin['z'][$map[$mode]];
             $tmp['count'] = $bin['count'];
             $filtered[] = $tmp;
         }
@@ -286,7 +304,7 @@ class Histogram3D extends AbstractHistogram
      * Checks that the array of options passed is valid
      * Options array should have the form:
      *
-     * $opt = array ('low'=>array('x'=>10, 'y'=>10),
+     * $opt = array ('low'=>array('x'=>10, 'y'=>10, 'z'=>10),
      *               'high'=>array(...),
      *               'nbins'=>array(...));
      *
@@ -300,28 +318,30 @@ class Histogram3D extends AbstractHistogram
             && is_array($binOptions['low'])
             && is_array($binOptions['high'])
             && is_array($binOptions['nbins']));
+
         if(!$barray) {
             return false;
         }
         $low = $binOptions['low'];
         $high = $binOptions['high'];
         $nbins = $binOptions['nbins'];
-        $blow = (isset($low['x']) && isset($low['y'])
-            && is_numeric($low['x']) && is_numeric($low['y']));
-        $bhigh = (isset($high['x']) && isset($high['y'])
-            && is_numeric($high['x']) && is_numeric($high['y']));
-        $bnbins = (isset($nbins['x']) && isset($nbins['y'])
-            && is_numeric($nbins['x']) && is_numeric($nbins['y']));
+        $blow = (isset($low['x']) && isset($low['y']) && isset($low['z'])
+            && is_numeric($low['x']) && is_numeric($low['y']) && is_numeric($low['z']));
+        $bhigh = (isset($high['x']) && isset($high['y']) && isset($high['z'])
+            && is_numeric($high['x']) && is_numeric($high['y']) && is_numeric($high['z']));
+        $bnbins = (isset($nbins['x']) && isset($nbins['y']) && isset($nbins['z'])
+            && is_numeric($nbins['x']) && is_numeric($nbins['y']) && is_numeric($nbins['z']));
         return ($blow && $bhigh && $bnbins);
     }
 
     /**
-     * Checks that the data passed is bi-dimensional numeric array
+     * Checks that the data passed is tri-dimensional numeric array
      * of the form:
      *
-     * $data = array ('x'=>array(...), 'y'=>array(...));
+     * $data = array ('x'=>array(...), 'y'=>array(...), 'z'=>array(...));
      *
-     * It also checks that: count($data['x']) == count($data['y'])
+     * It also checks that: count($data['x']) == count($data['y'] and
+     *                      count($data['x']) == count($data['z']
      *
      * @access  private
      * @return  boolean
@@ -329,11 +349,13 @@ class Histogram3D extends AbstractHistogram
     public function _validData($data)
     {
 
-        if (is_array($data) && is_array($data['x']) && is_array($data['y'])) {
+        if (is_array($data) && is_array($data['x']) && is_array($data['y']) && is_array($data['z'])) {
             $n = count($data['x']);
-            if (count($data) == 2 && $n == count($data['y'])) {
+            if (count($data) == 3 && $n == count($data['y']) && $n == count($data['z'])) {
                 for ($i = 0; $i < $n; $i++) {
-                    if (!is_numeric($data['x'][$i]) || !is_numeric($data['y'][$i])) {
+                    if (!is_numeric($data['x'][$i])
+                        || !is_numeric($data['y'][$i])
+                        || !is_numeric($data['z'][$i])) {
                         return false;
                     }
                 }
@@ -362,7 +384,9 @@ class Histogram3D extends AbstractHistogram
         if ($this->_rangeLow['x'] == min($this->_data['x'])
             && $this->_rangeHigh['x'] == max($this->_data['x'])
             && $this->_rangeLow['y'] == min($this->_data['y'])
-            && $this->_rangeHigh['y'] == max($this->_data['y'])) {
+            && $this->_rangeHigh['y'] == max($this->_data['y'])
+            && $this->_rangeLow['z'] == min($this->_data['z'])
+            && $this->_rangeHigh['z'] == max($this->_data['z'])) {
             return $this->_data;
         }
 
@@ -371,11 +395,14 @@ class Histogram3D extends AbstractHistogram
         for ($i = 0; $i < $ndata; $i++) {
             $x = $this->_data['x'][$i];
             $y = $this->_data['y'][$i];
+            $z = $this->_data['z'][$i];
             $inRangeX = ($this->_rangeLow['x'] <= $x && $this->_rangeHigh['x'] >= $x);
             $inRangeY = ($this->_rangeLow['y'] <= $y && $this->_rangeHigh['y'] >= $y);
-            if ($inRangeX && $inRangeY) {
+            $inRangeZ = ($this->_rangeLow['z'] <= $z && $this->_rangeHigh['z'] >= $z);
+            if ($inRangeX && $inRangeY && $inRangeZ) {
                 $data['x'][] = $x;
                 $data['y'][] = $y;
+                $data['z'][] = $z;
             } else {
                 continue;
             }

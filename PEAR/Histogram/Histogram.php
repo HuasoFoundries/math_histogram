@@ -79,12 +79,12 @@ class Histogram extends AbstractHistogram
 
         $this->_clear();
         if (!is_array($data)) {
-            return \PEAR::raiseError("array of numeric data expected");
+            throw new \PEAR_Exception("array of numeric data expected");
         }
 
         foreach ($data as $item) {
             if (!is_numeric($item)) {
-                return \PEAR::raiseError("non-numeric item in array");
+                throw new \PEAR_Exception("non-numeric item in array");
             }
         }
 
@@ -173,7 +173,7 @@ class Histogram extends AbstractHistogram
 
             return $this->_stats->calc($this->_statsMode);
         } else {
-            return \PEAR::raiseError("histogram has not been calculated");
+            throw new \PEAR_Exception("histogram has not been calculated");
         }
     }
 
@@ -190,7 +190,7 @@ class Histogram extends AbstractHistogram
             $this->_stats->setData($this->_histogramData());
             return $this->_stats->calc($this->_statsMode);
         } else {
-            return \PEAR::raiseError("histogram has not been calculated");
+            throw new \PEAR_Exception("histogram has not been calculated");
         }
     }
 
@@ -260,7 +260,7 @@ class Histogram extends AbstractHistogram
             $printer->setHistogram($this);
             return $printer->generateOutput();
         } else {
-            return \PEAR::raiseError('Invalid object, expecting a \PEAR\Histogram\Printer\* instance');
+            throw new \PEAR_Exception('Invalid object, expecting a \PEAR\Histogram\Printer\* instance');
         }
     }
 
@@ -276,7 +276,7 @@ class Histogram extends AbstractHistogram
     {
 
         if (!$this->isCalculated()) {
-            return \PEAR::raiseError("histogram has not been calculated");
+            throw new \PEAR_Exception("histogram has not been calculated");
         }
         $out = ($this->_type == self::HISTOGRAM_CUMMULATIVE) ? "Cummulative Frequency" : "Histogram";
         $out .= "\n\tNumber of bins: " . $this->_nbins . "\n";

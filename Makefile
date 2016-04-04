@@ -14,7 +14,7 @@ install:
 	composer install
 
 test:
-	php vendor/bin/phpunit
+	php vendor/bin/codecept run
 
 update_version:
 	@echo "Current version is " ${VERSION}

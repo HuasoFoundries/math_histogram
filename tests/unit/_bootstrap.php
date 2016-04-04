@@ -1,16 +1,8 @@
 <?php
-/**
- * Output data for the unit tests
- * 
- * @package Math_Stats
- * $Id$
- */
+// Here you can initialize variables that will be available to your tests
+$GLOBALS=[];
 
-//
-// for Math_Stats_Unit_Test::testGetData()
-//
-
-$testGetData_out1 = <<< EOD
+$GLOBALS['GetData_out1'] = <<< EOD
 [0 : 1]
 [1 : 2]
 [2 : 2]
@@ -26,7 +18,7 @@ $testGetData_out1 = <<< EOD
 
 EOD;
 
-$testGetData_out2 = <<< EOD
+$GLOBALS['GetData_out2'] = <<< EOD
 [0 : -0.6965]
 [1 : 0.0751]
 [2 : 0.3516]
@@ -36,7 +28,7 @@ $testGetData_out2 = <<< EOD
 
 EOD;
 
-$testGetData_out3 = <<< EOD
+$GLOBALS['GetData_out3'] = <<< EOD
 [0 : -0.6965]
 [1 : 0]
 [2 : 0]
@@ -48,7 +40,7 @@ $testGetData_out3 = <<< EOD
 
 EOD;
 
-$testGetData_out4 = <<< EOD
+$GLOBALS['GetData_out4'] = <<< EOD
 [0.5 : 3]
 [0.9 : 2]
 [1.22 : 6]
@@ -58,7 +50,7 @@ $testGetData_out4 = <<< EOD
 
 EOD;
 
-$testGetData_out5 = <<< EOD
+$GLOBALS['GetData_out5'] = <<< EOD
 [0.5 : 3]
 [0.9 : 2]
 [2.4 : 7]
@@ -66,7 +58,7 @@ $testGetData_out5 = <<< EOD
 
 EOD;
 
-$testGetData_out6 = <<< EOD
+$GLOBALS['GetData_out6'] = <<< EOD
 [0 : 0.5]
 [1 : 0.5]
 [2 : 0.5]
@@ -86,7 +78,7 @@ $testGetData_out6 = <<< EOD
 
 EOD;
 
-$testGetData_out7 = <<< EOD
+$GLOBALS['GetData_out7'] = <<< EOD
 [0 : 8]
 [0.5 : 3]
 [0.9 : 2]
@@ -99,7 +91,7 @@ EOD;
 // for Math_Stats_Unit_Test::testCalcBasic()
 //
 
-$testCalcBasic_out1 = <<< EOD
+$GLOBALS['CalcBasic_out1'] = <<< EOD
 [min : 1]
 [max : 6]
 [sum : 40.3]
@@ -112,7 +104,7 @@ $testCalcBasic_out1 = <<< EOD
 
 EOD;
 
-$testCalcBasic_out2 = <<< EOD
+$GLOBALS['CalcBasic_out2'] = <<< EOD
 [min : -0.6965]
 [max : 1.165]
 [sum : 2.1488]
@@ -125,7 +117,7 @@ $testCalcBasic_out2 = <<< EOD
 
 EOD;
 
-$testCalcBasic_out3 = <<< EOD
+$GLOBALS['CalcBasic_out3'] = <<< EOD
 [min : -0.6965]
 [max : 1.165]
 [sum : 2.1488]
@@ -138,7 +130,7 @@ $testCalcBasic_out3 = <<< EOD
 
 EOD;
 
-$testCalcBasic_out4 = <<< EOD
+$GLOBALS['CalcBasic_out4'] = <<< EOD
 [min : 0.5]
 [max : 3]
 [sum : 51.085]
@@ -151,7 +143,7 @@ $testCalcBasic_out4 = <<< EOD
 
 EOD;
 
-$testCalcBasic_out5 = <<< EOD
+$GLOBALS['CalcBasic_out5'] = <<< EOD
 [min : 0.5]
 [max : 3]
 [sum : 32.1]
@@ -164,7 +156,7 @@ $testCalcBasic_out5 = <<< EOD
 
 EOD;
 
-$testCalcBasic_out6 = <<< EOD
+$GLOBALS['CalcBasic_out6'] = <<< EOD
 [min : 0]
 [max : 3]
 [sum : 32.1]
@@ -181,7 +173,7 @@ EOD;
 // for Math_Stats_Unit_Test::testCalcFull()
 //
 
-$testCalcFull_out1 = <<< EOD
+$GLOBALS['CalcFull_out1'] = <<< EOD
 [min : 1]
 [max : 6]
 [sum : 40.3]
@@ -242,7 +234,7 @@ $testCalcFull_out1 = <<< EOD
 
 EOD;
 
-$testCalcFull_out2 = <<< EOD
+$GLOBALS['CalcFull_out2'] = <<< EOD
 [min : -0.6965]
 [max : 1.165]
 [sum : 2.1488]
@@ -298,7 +290,7 @@ $testCalcFull_out2 = <<< EOD
 
 EOD;
 
-$testCalcFull_out3 = <<< EOD
+$GLOBALS['CalcFull_out3'] = <<< EOD
 [min : -0.6965]
 [max : 1.165]
 [sum : 2.1488]
@@ -356,7 +348,7 @@ $testCalcFull_out3 = <<< EOD
 
 EOD;
 
-$testCalcFull_out4 = <<< EOD
+$GLOBALS['CalcFull_out4'] = <<< EOD
 [min : 0.5]
 [max : 3]
 [sum : 51.085]
@@ -413,7 +405,7 @@ $testCalcFull_out4 = <<< EOD
 
 EOD;
 
-$testCalcFull_out5 = <<< EOD
+$GLOBALS['CalcFull_out5'] = <<< EOD
 [min : 0.5]
 [max : 3]
 [sum : 32.1]
@@ -468,7 +460,7 @@ $testCalcFull_out5 = <<< EOD
 
 EOD;
 
-$testCalcFull_out6 = <<< EOD
+$GLOBALS['CalcFull_out6'] = <<< EOD
 [min : 0]
 [max : 3]
 [sum : 32.1]
@@ -528,23 +520,23 @@ EOD;
 // for Math_Stats_Unit_Test::mode()
 //
 
-$testMode_out1 =[2];
+$GLOBALS['Mode_out1'] =[2];
 
-$testMode_out2 =[0.6268];
+$GLOBALS['Mode_out2'] =[0.6268];
 
-$testMode_out3 =[0 , 0.6268];
+$GLOBALS['Mode_out3'] =[0 , 0.6268];
 
-$testMode_out4 = [ 2.4];
+$GLOBALS['Mode_out4'] = [ 2.4];
 
-$testMode_out5 = [ 2.4];
+$GLOBALS['Mode_out5'] = [ 2.4];
 
-$testMode_out6 = [0];
+$GLOBALS['Mode_out6'] = [0];
 
 //
 // for Math_Stats_Unit_Test::testFrequency()
 //
 
-$testFrequency_out1 = <<< EOD
+$GLOBALS['Frequency_out1'] = <<< EOD
 [1 : 1]
 [2 : 3]
 [2.3 : 1]
@@ -558,7 +550,7 @@ $testFrequency_out1 = <<< EOD
 
 EOD;
 
-$testFrequency_out2 = <<< EOD
+$GLOBALS['Frequency_out2'] = <<< EOD
 [-0.6965 : 1]
 [0.0751 : 1]
 [0.3516 : 1]
@@ -567,7 +559,7 @@ $testFrequency_out2 = <<< EOD
 
 EOD;
 
-$testFrequency_out3 = <<< EOD
+$GLOBALS['Frequency_out3'] = <<< EOD
 [-0.6965 : 1]
 [0 : 2]
 [0.0751 : 1]
@@ -577,7 +569,7 @@ $testFrequency_out3 = <<< EOD
 
 EOD;
 
-$testFrequency_out4 = <<< EOD
+$GLOBALS['Frequency_out4'] = <<< EOD
 [0.5 : 3]
 [0.9 : 2]
 [1.22 : 6]
@@ -587,7 +579,7 @@ $testFrequency_out4 = <<< EOD
 
 EOD;
 
-$testFrequency_out5 = <<< EOD
+$GLOBALS['Frequency_out5'] = <<< EOD
 [0.5 : 3]
 [0.9 : 2]
 [2.4 : 7]
@@ -595,7 +587,7 @@ $testFrequency_out5 = <<< EOD
 
 EOD;
 
-$testFrequency_out6 = <<< EOD
+$GLOBALS['Frequency_out6'] = <<< EOD
 [0 : 8]
 [0.5 : 3]
 [0.9 : 2]
@@ -608,42 +600,42 @@ EOD;
 // for Math_Stats_Unit_Test::testQuartiles()
 //
 
-$testQuartiles_out1 = <<< EOD
+$GLOBALS['Quartiles_out1'] = <<< EOD
 [25 : 2]
 [50 : 3.1]
 [75 : 4.75]
 
 EOD;
 
-$testQuartiles_out2 = <<< EOD
+$GLOBALS['Quartiles_out2'] = <<< EOD
 [25 : -0.3107]
 [50 : 0.4892]
 [75 : 0.8959]
 
 EOD;
 
-$testQuartiles_out3 = <<< EOD
+$GLOBALS['Quartiles_out3'] = <<< EOD
 [25 : 0]
 [50 : 0.21335]
 [75 : 0.6268]
 
 EOD;
 
-$testQuartiles_out4 = <<< EOD
+$GLOBALS['Quartiles_out4'] = <<< EOD
 [25 : 1.22]
 [50 : 2.333]
 [75 : 2.4]
 
 EOD;
 
-$testQuartiles_out5 = <<< EOD
+$GLOBALS['Quartiles_out5'] = <<< EOD
 [25 : 0.9]
 [50 : 2.4]
 [75 : 2.7]
 
 EOD;
 
-$testQuartiles_out6 = <<< EOD
+$GLOBALS['Quartiles_out6'] = <<< EOD
 [25 : 0]
 [50 : 0.9]
 [75 : 2.4]
@@ -654,7 +646,7 @@ EOD;
 // for Math_Stats_Unit_Test::testStudentize()
 //
 
-$testStudentize_out1 = <<< EOD
+$GLOBALS['Studentize_out1'] = <<< EOD
 [0 : -1.49075062298]
 [1 : -0.858630217475]
 [2 : -0.858630217475]
@@ -670,7 +662,7 @@ $testStudentize_out1 = <<< EOD
 
 EOD;
 
-$testStudentize_out2 = <<< EOD
+$GLOBALS['Studentize_out2'] = <<< EOD
 [min : -1.49075062298]
 [max : 1.66985140454]
 [sum : 3.5527136788E-15]
@@ -731,7 +723,7 @@ $testStudentize_out2 = <<< EOD
 
 EOD;
 
-$testStudentize_out3 = <<< EOD
+$GLOBALS['Studentize_out3'] = <<< EOD
 [-1.66471133566 : 3]
 [-1.18635873688 : 2]
 [-0.803676657858 : 6]
@@ -741,7 +733,7 @@ $testStudentize_out3 = <<< EOD
 
 EOD;
 
-$testStudentize_out4 = <<< EOD
+$GLOBALS['Studentize_out4'] = <<< EOD
 [min : -1.66471133566]
 [max : 1.32499240671]
 [sum : -8.881784197E-16]
@@ -798,7 +790,7 @@ $testStudentize_out4 = <<< EOD
 
 EOD;
 
-$testCenter_out3 = <<< EOD
+$GLOBALS['Center_out3'] = <<< EOD
 [-1.39203703704 : 3]
 [-0.992037037037 : 2]
 [-0.672037037037 : 6]
@@ -808,7 +800,7 @@ $testCenter_out3 = <<< EOD
 
 EOD;
 
-$testCenter_out4 = <<< EOD
+$GLOBALS['Center_out4'] = <<< EOD
 [min : -1.39203703704]
 [max : 1.10796296296]
 [sum : -1.9998225298E-11]
@@ -869,7 +861,7 @@ EOD;
 // for Math_Stats_Unit_Test::testCenter()
 //
 
-$testCenter_out1 = <<< EOD
+$GLOBALS['Center_out1'] = <<< EOD
 [0 : -2.35833333333]
 [1 : -1.35833333333]
 [2 : -1.35833333333]
@@ -885,7 +877,7 @@ $testCenter_out1 = <<< EOD
 
 EOD;
 
-$testCenter_out2 = <<< EOD
+$GLOBALS['Center_out2'] = <<< EOD
 [min : -2.35833333333]
 [max : 2.64166666667]
 [sum : 5.3290705182E-15]
@@ -946,4 +938,3 @@ $testCenter_out2 = <<< EOD
 
 EOD;
 
-?>

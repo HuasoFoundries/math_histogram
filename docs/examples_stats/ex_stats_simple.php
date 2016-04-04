@@ -23,38 +23,50 @@
  * @package	Math_Stats
  */
 
-require_once "Math/Stats.php";
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-// making some cummulative data sets
+// making some data sets
+$data = array (2,2.3,4.5,2,2,3.2,5.3,3,4,5,1,6);
+$dnulls = array (1.1650,null, "foo",0.6268, 0.6268, 0.0751, 0.3516, -0.6965);
 
-$data = array("3"=>4, "2.333"=>5, "1.22"=>6, "0.5"=>3, "0.9"=>2, "2.4"=>7);
-$dnulls = array("3"=>4, "caca"=>2, "bar is not foo"=>6, "0.5"=>3, "0.9"=>2, "2.4"=>7);
+// instantiating a Math_Stats object
+$s = new \PEAR\Math\Stats();
 
-// instantiate a Math_Stats object
-$s = new Math_Stats();
-$s->setData($data, STATS_DATA_CUMMULATIVE);
-
-echo "*** Original cummulative data set\n";
+echo "*** Original data set\n";
 print_r($data);
-// let's print some simple statistics
-echo "Simple stats from cummulative data, note the count\n";
+$s->setData($data);
+echo "Basic statistics\n";
 print_r($s->calcBasic());
 
-// now, lets generate an error by using the $dnulls array
-echo "\n*** Another cummulative data set\n";
+echo "\n*** A data set with nulls\n";
 print_r($dnulls);
-echo "Generating an error by using data with nulls\n";
-print_r($s->setData($dnulls, STATS_DATA_CUMMULATIVE));
+echo "Let's generate an error\n";
+try {
+	print_r($s->setData($dnulls));
+} catch (\Exception $e) {
+	echo "\n\t Exception: ".$e->getMessage()."\n\n";
+}
 
-// let's ignore nulls
-echo "Ignoring the nulls and trying again\n";
-$s->setNullOption(STATS_IGNORE_NULL);
-$s->setData($dnulls, STATS_DATA_CUMMULATIVE);
-print_r($s->calcBasic());
+echo "Ignoring nulls and trying again\n";
+$s->setNullOption(\PEAR\Math\Stats::STATS_IGNORE_NULL);
+$s->setData($dnulls);
+echo "---> data after ignoring (removing) nulls\n";
+print_r($s->getData());
+echo "---> stats\n";
+try {
+	print_r($s->calcBasic());
+} catch (\Exception $e) {
+	echo "\n\t Exception: ".$e->getMessage()."\n\n";
+}
 
-// let's assume null == zero
-echo "Assuming that nulls are zero\n";
-$s->setNullOption(STATS_USE_NULL_AS_ZERO);
-$s->setData($dnulls, STATS_DATA_CUMMULATIVE);
-print_r($s->calcFull());
-?>
+echo "Assuming nulls are zeros and doing a full stats calculation\n";
+$s->setNullOption(\PEAR\Math\Stats::STATS_USE_NULL_AS_ZERO);
+$s->setData($dnulls);
+echo "---> data after setting nulls to zero\n";
+print_r($s->getData());
+echo "---> stats\n";
+try {
+	print_r($s->calcFull());
+} catch (\Exception $e) {
+	echo "\n\t Exception: ".$e->getMessage()."\n\n";
+}

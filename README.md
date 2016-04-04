@@ -1,2 +1,10 @@
-# math_histogram
-Mix of PEAR Math_Stats and Math_Histogram
+# Math_Histogram
+
+This Package is a mix of of PEAR's Math_Stats and Math_Histogram
+
+To test, run:
+
+```
+make install
+make test
+```

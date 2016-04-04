@@ -69,10 +69,13 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
         // simple data sets
         $this->s1 = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_REJECT_NULL);
         $this->s1->setData($this->data1);
+
         $this->s2a = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_IGNORE_NULL);
         $this->s2a->setData($this->data2);
+
         $this->s2b = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_USE_NULL_AS_ZERO);
         $this->s2b->setData($this->data2);
+        
         // cummulative data sets
         $this->s3 = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_REJECT_NULL);
         $this->s3->setData($this->data3, \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
@@ -632,12 +635,12 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
     public function testMode()
     {
 /*{{{*/
-        $this->assertEquals($GLOBALS['testMode_out1'], $this->formatArray($this->s1->mode()));
-        $this->assertEquals($GLOBALS['testMode_out2'], $this->formatArray($this->s2a->mode()));
-        $this->assertEquals($GLOBALS['testMode_out3'], $this->formatArray($this->s2b->mode()));
-        $this->assertEquals($GLOBALS['testMode_out4'], $this->formatArray($this->s3->mode()));
-        $this->assertEquals($GLOBALS['testMode_out5'], $this->formatArray($this->s4a->mode()));
-        $this->assertEquals($GLOBALS['testMode_out6'], $this->formatArray($this->s4b->mode()));
+        $this->assertEquals($GLOBALS['testMode_out1'], $this->s1->mode());
+        $this->assertEquals($GLOBALS['testMode_out2'], $this->s2a->mode());
+        $this->assertEquals($GLOBALS['testMode_out3'], $this->s2b->mode());
+        $this->assertEquals($GLOBALS['testMode_out4'], $this->s3->mode());
+        $this->assertEquals($GLOBALS['testMode_out5'], $this->s4a->mode());
+        $this->assertEquals($GLOBALS['testMode_out6'], $this->s4b->mode());
     }
 
 /*}}}*/

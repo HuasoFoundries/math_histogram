@@ -528,36 +528,17 @@ EOD;
 // for Math_Stats_Unit_Test::mode()
 //
 
-$testMode_out1 = <<< EOD
-[0 : 2]
+$testMode_out1 =[2];
 
-EOD;
+$testMode_out2 =[0.6268];
 
-$testMode_out2 = <<< EOD
-[0 : 0.6268]
+$testMode_out3 =[0 , 0.6268];
 
-EOD;
+$testMode_out4 = [ 2.4];
 
-$testMode_out3 = <<< EOD
-[0 : 0.6268]
-[1 : 0]
+$testMode_out5 = [ 2.4];
 
-EOD;
-
-$testMode_out4 = <<< EOD
-[0 : 2.4]
-
-EOD;
-
-$testMode_out5 = <<< EOD
-[0 : 2.4]
-
-EOD;
-
-$testMode_out6 = <<< EOD
-[0 : 0]
-
-EOD;
+$testMode_out6 = [0];
 
 //
 // for Math_Stats_Unit_Test::testFrequency()

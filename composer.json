@@ -1,5 +1,4 @@
 {
-    "license": "PHP",
     "name": "huasofoundries/math_histogram",
     "authors": [{
         "email": "jmcastagnetto@php.net",
@@ -11,9 +10,11 @@
         "role": "Forking and Copy Pasting"
     }],
     "version": "0.2.0",
+    "license": "PHP",
     "autoload": {
         "psr-0": {
-            "PEAR\\Math": "./"
+            "PEAR\\Math": "./",
+            "PEAR\\Histogram": "./"
         }
     },
     "description": "More info available on: http://pear.php.net/package/Math_Stats",

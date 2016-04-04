@@ -598,7 +598,10 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
 /*{{{*/
         $this->assertEquals($GLOBALS['Mode_out1'], $this->s1->mode());
         $this->assertEquals($GLOBALS['Mode_out2'], $this->s2a->mode());
-        $this->assertEquals($GLOBALS['Mode_out3'], $this->s2b->mode());
+        
+        $this->assertEquals($GLOBALS['Mode_out3'][0], $this->s2b->mode()[0]);
+        $this->assertEquals($GLOBALS['Mode_out3'][1], round($this->s2b->mode()[1],4));
+        
         $this->assertEquals($GLOBALS['Mode_out4'], $this->s3->mode());
         $this->assertEquals($GLOBALS['Mode_out5'], $this->s4a->mode());
         $this->assertEquals($GLOBALS['Mode_out6'], $this->s4b->mode());

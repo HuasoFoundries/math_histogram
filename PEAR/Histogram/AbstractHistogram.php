@@ -108,7 +108,7 @@ class AbstractHistogram
             $this->_type = $type;
             return true;
         } else {
-            return PEAR::raiseError("wrong histogram type requested");
+            throw new \PEAR_Exception("wrong histogram type requested");
         }
     }
 
@@ -123,7 +123,7 @@ class AbstractHistogram
     {
 
         if (!is_array($binOptions)) {
-            return PEAR::raiseError("incorrect options array");
+            throw new \PEAR_Exception("incorrect options array");
         }
 
         $this->_rangeLow = $binOptions["low"];
@@ -155,7 +155,7 @@ class AbstractHistogram
     {
 
         if (is_null($this->_data)) {
-            return PEAR::raiseError("data has not been set");
+            throw new \PEAR_Exception("data has not been set");
         } else {
             return $this->_data;
         }
@@ -176,7 +176,7 @@ class AbstractHistogram
     {
 
         if (is_null($this->_data)) {
-            return PEAR::raiseError("data has not been set");
+            throw new \PEAR_Exception("data has not been set");
         } else {
             return $this->_histogramData();
         }
@@ -194,7 +194,7 @@ class AbstractHistogram
     {
 
         if (empty($this->_bins)) {
-            return PEAR::raiseError("histogram has not been calculated");
+            throw new \PEAR_Exception("histogram has not been calculated");
         }
 
         switch ($mode) {
@@ -207,7 +207,7 @@ class AbstractHistogram
                 return $this->_filterBins($mode);
                 break;
             default:
-                return PEAR::raiseError("incorrect mode for bins");
+                throw new \PEAR_Exception("incorrect mode for bins");
         }
     }
 
@@ -240,7 +240,7 @@ class AbstractHistogram
             );
             return $info;
         } else {
-            return PEAR::raiseError("histogram has not been calculated");
+            throw new \PEAR_Exception("histogram has not been calculated");
         }
     }
 

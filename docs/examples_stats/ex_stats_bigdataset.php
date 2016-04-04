@@ -1,17 +1,25 @@
 <?php
     //require_once 'Math/Stats.php';
-    require_once '../../Stats.php';
+   require_once __DIR__ . '/../../vendor/autoload.php';
+
 
     $data = array();
-    $fp = fopen("bigcummulativedata.dat", "r");
+    $fp = fopen(__DIR__."/bigcummulativedata.dat", "r");
+    
+
+    
     while ((list($val, $count) = fgetcsv($fp, 80)) !== false) {
         $data[$val] = $count;
     }
 
-    $s = new Math_Stats();
-    $s->setData($data, STATS_DATA_CUMMULATIVE);
+    $s = new \PEAR\Math\Stats();
+    $s->setData($data, \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
+    
+
+    try {
     $stats = $s ->calcFull();
-    //print_r($stats);
+
+       //print_r($stats);
     echo "Using Math_Stats:\n"
         . "mean = {$stats['mean']}\n"
         . "SEmean = {$stats['std_error_of_mean']}\n"
@@ -33,6 +41,11 @@
         . "max = 41\n"
         . "count = 4255666\n";
         
-  //Name,Mean,SEMean,StDev,Q1,Median,Q3,Min,Max,N
-  //SPSS,2.8627,0.0005,1.0630,2,3,4,1,41,4255666
-?>
+      //Name,Mean,SEMean,StDev,Q1,Median,Q3,Min,Max,N
+      //SPSS,2.8627,0.0005,1.0630,2,3,4,1,41,4255666
+    } catch (\Exception $e) {
+        echo "\n\t Exception: ".$e->getMessage()."\n\n";
+    }
+
+ 
+

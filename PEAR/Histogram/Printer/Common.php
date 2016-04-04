@@ -105,7 +105,7 @@ class Common
     public function generateOutput()
     {
 
-        return \PEAR::raiseError('Unimplemented method');
+        throw new \PEAR_Exception('Unimplemented method');
     }
 
     // override this method in child classes
@@ -118,7 +118,7 @@ class Common
     public function printOutput()
     {
 
-        return \PEAR::raiseError('Unimplemented method');
+        throw new \PEAR_Exception('Unimplemented method');
     }
 
     // override this method in child classes
@@ -134,7 +134,7 @@ class Common
     public function printHistogram(&$hist, $options = array())
     {
 
-        return \PEAR::raiseError('Unimplemented method');
+        throw new \PEAR_Exception('Unimplemented method');
     }
 
     /**
@@ -151,10 +151,10 @@ class Common
     {
 
         if (!$printer->setHistogram($hist)) {
-            return \PEAR::raiseError('Not a valid Histogram object');
+            throw new \PEAR_Exception('Not a valid Histogram object');
         }
         if (!$printer->setOptions($options)) {
-            return \PEAR::raiseError('Expecting an associative array of options');
+            throw new \PEAR_Exception('Expecting an associative array of options');
         }
         // try to plot, clean up object, and return
         $err = $printer->printOutput();

@@ -31,7 +31,11 @@ class Histogram4D extends AbstractHistogram
     {
 
         $this->setType($type);
-        $this->setBinOptions($binOptions);
+         try {
+            $this->setBinOptions($binOptions);
+        } catch (\PEAR_Exception $e) {
+            // Falling back to default options
+        }
     }
 
     /**
@@ -47,7 +51,7 @@ class Histogram4D extends AbstractHistogram
         if ($this->_validBinOptions($binOptions)) {
             return parent::setBinOptions($binOptions);
         } else {
-            return \PEAR::raiseError("incorrect options array");
+            throw new \PEAR_Exception("incorrect options array");
         }
 
     }
@@ -70,7 +74,7 @@ class Histogram4D extends AbstractHistogram
 
         $this->_clear();
         if (!$this->_validData($data)) {
-            return \PEAR::raiseError("array of numeric coordinates expected");
+            throw new \PEAR_Exception("array of numeric coordinates expected");
         }
 
         $this->_data = $data;
@@ -101,7 +105,7 @@ class Histogram4D extends AbstractHistogram
      *
      * @see Math_Stats
      */
-    public function calculate($statsMode = self::STATS_BASIC)
+    public function calculate($statsMode = \PEAR\Math\Stats::STATS_BASIC)
     {
 
         $this->_bins = array();
@@ -196,7 +200,7 @@ class Histogram4D extends AbstractHistogram
     {
 
         if (empty($this->_bins)) {
-            return \PEAR::raiseError("histogram has not been calculated");
+            throw new \PEAR_Exception("histogram has not been calculated");
         }
 
         $this->_stats['x']->setData($this->_data['x']);
@@ -217,7 +221,7 @@ class Histogram4D extends AbstractHistogram
     {
 
         if (empty($this->_bins)) {
-            return \PEAR::raiseError("histogram has not been calculated");
+            throw new \PEAR_Exception("histogram has not been calculated");
         }
 
         $data = $this->_histogramData();
@@ -240,11 +244,12 @@ class Histogram4D extends AbstractHistogram
      */
     public function toSeparated($mode = self::HISTOGRAM_MID_BINS, $separator = ", ")
     {
-
-        $bins = $this->getBins($mode);
-        if (\PEAR::isError($bins)) {
+        try {
+            $bins = $this->getBins($mode);    
+        } catch (\PEAR_Exception $e) {
             return $bins;
         }
+        
 
         $nbins = count($bins);
         $out = array("# x_bin{$separator}y_bin{$separator}z_bin{$separator}frequency");
@@ -313,6 +318,10 @@ class Histogram4D extends AbstractHistogram
             && is_array($binOptions['low'])
             && is_array($binOptions['high'])
             && is_array($binOptions['nbins']));
+
+        if(!$barray) {
+            return false;
+        }
         $low = $binOptions['low'];
         $high = $binOptions['high'];
         $nbins = $binOptions['nbins'];
@@ -322,7 +331,7 @@ class Histogram4D extends AbstractHistogram
             && is_numeric($high['x']) && is_numeric($high['y']) && is_numeric($high['z']));
         $bnbins = (isset($nbins['x']) && isset($nbins['y']) && isset($nbins['z'])
             && is_numeric($nbins['x']) && is_numeric($nbins['y']) && is_numeric($nbins['z']));
-        return ($barray && $blow && $bhigh && $bnbins);
+        return ($blow && $bhigh && $bnbins);
     }
 
     /**

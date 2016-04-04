@@ -1,7 +1,6 @@
 <?php
 
-require_once "Math/Histogram.php";
-require_once 'Math/Histogram/Printer/Text.php';
+require_once __DIR__ . '/../../vendor/autoload.php';;
 
 // create a boring array
 $vals = array(
@@ -11,16 +10,16 @@ $vals = array(
 		);
 
 // create an instance 
-$h = new Math_Histogram();
+$h = new \PEAR\Histogram\Histogram();
 
 // let's do a cummulative histogram
-$h->setType(HISTOGRAM_CUMMULATIVE);
+$h->setType(\PEAR\Histogram\AbstractHistogram::HISTOGRAM_CUMMULATIVE);
 $h->setData($vals);
 echo "\n\n===== Using a static method to print the histogram =====\n";
-Math_Histogram_Printer_Text::printHistogram($h);
+\PEAR\Histogram\Printer\Text::printHistogram($h);
 
 // create a printer object
-$p = new Math_Histogram_Printer_Text();
+$p = new \PEAR\Histogram\Printer\Text();
 $p->setHistogram($h);
 $p->setOptions(array('outputStats'=>true));
 echo "\n\n===== Using a printer object =====\n";
@@ -33,16 +32,15 @@ foreach(file("ex_histogram.data") as $item) {
 }
 
 // let's do a simple histogram
-$h->setType(HISTOGRAM_SIMPLE);
+$h->setType(\PEAR\Histogram\AbstractHistogram::HISTOGRAM_SIMPLE);
 // and set new bin options
 $h->setBinOptions(20,1.7,2.7);
 // then set a the big data set
 $h->setData($data);
 // and calculate using full stats
-$h->calculate(STATS_FULL);
+$h->calculate(\PEAR\Math\Stats::STATS_FULL);
 
 echo "\n===== Using Math_Histogram's generatePlot() =====\n";
 $p->setHistogram($h);
 $p->setOptions(array('outputStats'=>true));
 echo $h->generatePlot($p);
-?>

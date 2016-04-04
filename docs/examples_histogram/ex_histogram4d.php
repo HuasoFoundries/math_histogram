@@ -1,6 +1,6 @@
 <?php
 
-include 'Math/Histogram4D.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 // let's generate some data
 for ($i=0; $i < 100; $i++) {
@@ -11,7 +11,7 @@ for ($i=0; $i < 100; $i++) {
 
 // and create a histogram from the data 
 // with specific options
-$h = new Math_Histogram4D();
+$h = new \PEAR\Histogram\Histogram4D();
 $h->setBinOptions(
 	array(
 		'low' => array( 'x' => 0, 'y' => 0, 'z'=>0),
@@ -25,5 +25,3 @@ $h->calculate();
 echo $h->toSeparated();
 // and the whole Histogram information
 print_r($h->getHistogramInfo());
-
-?>

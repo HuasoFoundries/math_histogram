@@ -22,7 +22,7 @@ class Text extends Common
     {
 
         if (is_null($this->_hist)) {
-            return \PEAR::raiseError('Math_Histogram object has not been set');
+            throw new \PEAR_Exception('Math_Histogram object has not been set');
         }
         if (!$this->_hist->isCalculated()) {
             if (isset($this->_options['histogramStatsMode'])) {

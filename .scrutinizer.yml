@@ -1,0 +1,17 @@
+# .scrutinizer.yml
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
+filter:
+    paths: ["src/*"]
+
+build:
+    environment:
+      php: '5.5'
+
+    tests:
+        override:
+            - 'php vendor/bin/codecept run'

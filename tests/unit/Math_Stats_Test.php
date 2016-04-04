@@ -1,29 +1,4 @@
 <?php
-//
-// +----------------------------------------------------------------------+
-// | PHP version 4.0                                                      |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2001 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 2.02 of the PHP license,      |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/2_02.txt.                                 |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Authors: Jesus M. Castagnetto <jmcastagnetto@php.net>                |
-// +----------------------------------------------------------------------+
-//
-// $Id$
-//
-
-/**
- * Unit test for the Math_Stats class
- *
- * @package Math_Stats
- */
 
 define('__PRECISION', 12);
 define('__DELTA', pow(10, -1 * (__PRECISION - 4)));
@@ -31,14 +6,12 @@ define('__DELTA', pow(10, -1 * (__PRECISION - 4)));
 // make sure we have the correct number of decimal figures
 ini_set('precision', __PRECISION);
 
-/**
- * Unit test class Math_Stats
- *
- */
-class Math_StatsTest extends PHPUnit_Framework_TestCase
+class Math_Stats_Test extends \Codeception\TestCase\Test
 {
-/*{{{*/
-
+    /**
+     * @var \UnitTester
+     */
+    protected $tester;
     public $s1;
     public $s2a;
     public $s2b;
@@ -55,18 +28,9 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
     // cummulative data set with nulls
     public $data4 = array("3" => 4, "plink" => 2, "bar is not foo" => 6, "0.5" => 3, "0.9" => 2, "2.4" => 7);
 
-    public function Math_Stats_UnitTest($name)
+    protected function _before()
     {
-/*{{{*/
-        $this->PHPUnit_TestCase($name);
-    }
-
-/*}}}*/
-
-    public function setUp()
-    {
-/*{{{*/
-        // simple data sets
+                // simple data sets
         $this->s1 = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_REJECT_NULL);
         $this->s1->setData($this->data1);
 
@@ -85,12 +49,9 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
         $this->s4b->setData($this->data4, \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
     }
 
-/*}}}*/
-
-    public function tearDown()
+    protected function _after()
     {
-/*{{{*/
-        unset($this->s1);
+                unset($this->s1);
         unset($this->s2a);
         unset($this->s2b);
         unset($this->s3);
@@ -98,18 +59,18 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
         unset($this->s4b);
     }
 
-/*}}}*/
+
 
     public function testGetData()
     {
 /*{{{*/
-        $this->assertEquals($GLOBALS['testGetData_out1'], $this->formatArray($this->s1->getData()));
-        $this->assertEquals($GLOBALS['testGetData_out2'], $this->formatArray($this->s2a->getData()));
-        $this->assertEquals($GLOBALS['testGetData_out3'], $this->formatArray($this->s2b->getData()));
-        $this->assertEquals($GLOBALS['testGetData_out4'], $this->formatArray($this->s3->getData()));
-        $this->assertEquals($GLOBALS['testGetData_out5'], $this->formatArray($this->s4a->getData()));
-        $this->assertEquals($GLOBALS['testGetData_out6'], $this->formatArray($this->s4a->getData(true)));
-        $this->assertEquals($GLOBALS['testGetData_out7'], $this->formatArray($this->s4b->getData()));
+        $this->assertEquals($GLOBALS['GetData_out1'], $this->formatArray($this->s1->getData()));
+        $this->assertEquals($GLOBALS['GetData_out2'], $this->formatArray($this->s2a->getData()));
+        $this->assertEquals($GLOBALS['GetData_out3'], $this->formatArray($this->s2b->getData()));
+        $this->assertEquals($GLOBALS['GetData_out4'], $this->formatArray($this->s3->getData()));
+        $this->assertEquals($GLOBALS['GetData_out5'], $this->formatArray($this->s4a->getData()));
+        $this->assertEquals($GLOBALS['GetData_out6'], $this->formatArray($this->s4a->getData(true)));
+        $this->assertEquals($GLOBALS['GetData_out7'], $this->formatArray($this->s4b->getData()));
     }
 
 /*}}}*/
@@ -117,17 +78,17 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
     public function testCalcBasic()
     {
 /*{{{*/
-        $this->assertEquals($GLOBALS['testCalcBasic_out1'],
+        $this->assertEquals($GLOBALS['CalcBasic_out1'],
             $this->formatArray($this->s1->calcBasic(false)));
-        $this->assertEquals($GLOBALS['testCalcBasic_out2'],
+        $this->assertEquals($GLOBALS['CalcBasic_out2'],
             $this->formatArray($this->s2a->calcBasic(false)));
-        $this->assertEquals($GLOBALS['testCalcBasic_out3'],
+        $this->assertEquals($GLOBALS['CalcBasic_out3'],
             $this->formatArray($this->s2b->calcBasic(false)));
-        $this->assertEquals($GLOBALS['testCalcBasic_out4'],
+        $this->assertEquals($GLOBALS['CalcBasic_out4'],
             $this->formatArray($this->s3->calcBasic(false)));
-        $this->assertEquals($GLOBALS['testCalcBasic_out5'],
+        $this->assertEquals($GLOBALS['CalcBasic_out5'],
             $this->formatArray($this->s4a->calcBasic(false)));
-        $this->assertEquals($GLOBALS['testCalcBasic_out6'],
+        $this->assertEquals($GLOBALS['CalcBasic_out6'],
             $this->formatArray($this->s4b->calcBasic(false)));
     }
 
@@ -136,22 +97,22 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
     public function testCalcFull()
     {
 /*{{{*/
-        $this->assertEquals($GLOBALS['testCalcFull_out1'],
+        $this->assertEquals($GLOBALS['CalcFull_out1'],
             $this->formatArray($this->s1->calcFull(false)));
 
         $this->setExpectedException('PEAR_Exception', 'The product of the data set is negative, geometric mean undefined.');
         $this->formatArray($this->s2a->calcFull(false));
 
-        $this->assertEquals($GLOBALS['testCalcFull_out3'],
+        $this->assertEquals($GLOBALS['CalcFull_out3'],
             $this->formatArray($this->s2b->calcFull(false)));
 
-        $this->assertEquals($GLOBALS['testCalcFull_out4'],
+        $this->assertEquals($GLOBALS['CalcFull_out4'],
             $this->formatArray($this->s3->calcFull(false)));
 
-        $this->assertEquals($GLOBALS['testCalcFull_out5'],
+        $this->assertEquals($GLOBALS['CalcFull_out5'],
             $this->formatArray($this->s4a->calcFull(false)));
 
-        $this->assertEquals($GLOBALS['testCalcFull_out6'],
+        $this->assertEquals($GLOBALS['CalcFull_out6'],
             $this->formatArray($this->s4b->calcFull(false)));
     }
 
@@ -635,12 +596,12 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
     public function testMode()
     {
 /*{{{*/
-        $this->assertEquals($GLOBALS['testMode_out1'], $this->s1->mode());
-        $this->assertEquals($GLOBALS['testMode_out2'], $this->s2a->mode());
-        $this->assertEquals($GLOBALS['testMode_out3'], $this->s2b->mode());
-        $this->assertEquals($GLOBALS['testMode_out4'], $this->s3->mode());
-        $this->assertEquals($GLOBALS['testMode_out5'], $this->s4a->mode());
-        $this->assertEquals($GLOBALS['testMode_out6'], $this->s4b->mode());
+        $this->assertEquals($GLOBALS['Mode_out1'], $this->s1->mode());
+        $this->assertEquals($GLOBALS['Mode_out2'], $this->s2a->mode());
+        $this->assertEquals($GLOBALS['Mode_out3'], $this->s2b->mode());
+        $this->assertEquals($GLOBALS['Mode_out4'], $this->s3->mode());
+        $this->assertEquals($GLOBALS['Mode_out5'], $this->s4a->mode());
+        $this->assertEquals($GLOBALS['Mode_out6'], $this->s4b->mode());
     }
 
 /*}}}*/
@@ -824,12 +785,12 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
     public function testFrequency()
     {
 /*{{{*/
-        $this->assertEquals($GLOBALS['testFrequency_out1'], $this->formatArray($this->s1->frequency()));
-        $this->assertEquals($GLOBALS['testFrequency_out2'], $this->formatArray($this->s2a->frequency()));
-        $this->assertEquals($GLOBALS['testFrequency_out3'], $this->formatArray($this->s2b->frequency()));
-        $this->assertEquals($GLOBALS['testFrequency_out4'], $this->formatArray($this->s3->frequency()));
-        $this->assertEquals($GLOBALS['testFrequency_out5'], $this->formatArray($this->s4a->frequency()));
-        $this->assertEquals($GLOBALS['testFrequency_out6'], $this->formatArray($this->s4b->frequency()));
+        $this->assertEquals($GLOBALS['Frequency_out1'], $this->formatArray($this->s1->frequency()));
+        $this->assertEquals($GLOBALS['Frequency_out2'], $this->formatArray($this->s2a->frequency()));
+        $this->assertEquals($GLOBALS['Frequency_out3'], $this->formatArray($this->s2b->frequency()));
+        $this->assertEquals($GLOBALS['Frequency_out4'], $this->formatArray($this->s3->frequency()));
+        $this->assertEquals($GLOBALS['Frequency_out5'], $this->formatArray($this->s4a->frequency()));
+        $this->assertEquals($GLOBALS['Frequency_out6'], $this->formatArray($this->s4b->frequency()));
     }
 
 /*}}}*/
@@ -837,12 +798,12 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
     public function testQuartiles()
     {
 /*{{{*/
-        $this->assertEquals($GLOBALS['testQuartiles_out1'], $this->formatArray($this->s1->quartiles()));
-        $this->assertEquals($GLOBALS['testQuartiles_out2'], $this->formatArray($this->s2a->quartiles()));
-        $this->assertEquals($GLOBALS['testQuartiles_out3'], $this->formatArray($this->s2b->quartiles()));
-        $this->assertEquals($GLOBALS['testQuartiles_out4'], $this->formatArray($this->s3->quartiles()));
-        $this->assertEquals($GLOBALS['testQuartiles_out5'], $this->formatArray($this->s4a->quartiles()));
-        $this->assertEquals($GLOBALS['testQuartiles_out6'], $this->formatArray($this->s4b->quartiles()));
+        $this->assertEquals($GLOBALS['Quartiles_out1'], $this->formatArray($this->s1->quartiles()));
+        $this->assertEquals($GLOBALS['Quartiles_out2'], $this->formatArray($this->s2a->quartiles()));
+        $this->assertEquals($GLOBALS['Quartiles_out3'], $this->formatArray($this->s2b->quartiles()));
+        $this->assertEquals($GLOBALS['Quartiles_out4'], $this->formatArray($this->s3->quartiles()));
+        $this->assertEquals($GLOBALS['Quartiles_out5'], $this->formatArray($this->s4a->quartiles()));
+        $this->assertEquals($GLOBALS['Quartiles_out6'], $this->formatArray($this->s4b->quartiles()));
     }
 
 /*}}}*/
@@ -1023,12 +984,12 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('PEAR_Exception', 'The product of the data set is negative, geometric mean undefined.');
         $this->formatArray($this->s1->getData());
 
-        $this->assertEquals($GLOBALS['testStudentize_out2'],
+        $this->assertEquals($GLOBALS['Studentize_out2'],
             $this->formatArray($this->s1->calcFull(false)));
         $this->s3->studentize();
-        $this->assertEquals($GLOBALS['testStudentize_out3'],
+        $this->assertEquals($GLOBALS['Studentize_out3'],
             $this->formatArray($this->s3->getData()));
-        $this->assertEquals($GLOBALS['testStudentize_out4'],
+        $this->assertEquals($GLOBALS['Studentize_out4'],
             $this->formatArray($this->s3->calcFull(false)));
     }
 
@@ -1038,16 +999,16 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
     {
 /*{{{*/
         $this->s1->center();
-        $this->assertEquals($GLOBALS['testCenter_out1'],
+        $this->assertEquals($GLOBALS['Center_out1'],
             $this->formatArray($this->s1->getData()));
 
         $this->setExpectedException('PEAR_Exception', 'The product of the data set is negative, geometric mean undefined.');
         $this->formatArray($this->s1->calcFull(false));
 
         $this->s3->center();
-        $this->assertEquals($GLOBALS['testCenter_out3'],
+        $this->assertEquals($GLOBALS['Center_out3'],
             $this->formatArray($this->s3->getData()));
-        $this->assertEquals($GLOBALS['testCenter_out4'],
+        $this->assertEquals($GLOBALS['Center_out4'],
             $this->formatArray($this->s3->calcFull(false)));
     }
 
@@ -1076,6 +1037,4 @@ class Math_StatsTest extends PHPUnit_Framework_TestCase
         return $out;
     }
 
-/*}}}*/
-
-} /*}}}*/
+}

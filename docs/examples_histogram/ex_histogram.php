@@ -23,7 +23,7 @@ echo "\n=====\n";
 
 // let us read a bigger data set:
 $data = array();
-foreach(file(__DIR__."/ex_histogram.data") as $item)
+foreach(file(__DIR__."/../../tests/_data/ex_histogram.data") as $item)
 	$data[] = floatval(trim($item));
 
 // let's do a simple histogram

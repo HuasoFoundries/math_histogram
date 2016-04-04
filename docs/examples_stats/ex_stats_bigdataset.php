@@ -4,7 +4,7 @@
 
 
     $data = array();
-    $fp = fopen(__DIR__."/bigcummulativedata.dat", "r");
+    $fp = fopen(__DIR__."/../../tests/_data/bigcummulativedata.dat", "r");
     
 
     

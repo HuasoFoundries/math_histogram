@@ -1,4 +1,4 @@
 # composer related
-composer.lock
+# composer.lock I rather have lock in version control
 composer.phar
 vendor

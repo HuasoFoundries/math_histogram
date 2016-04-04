@@ -31,22 +31,22 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
     protected function _before()
     {
                 // simple data sets
-        $this->s1 = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_REJECT_NULL);
+        $this->s1 = new \HuasoFoundries\Math\Stats(\HuasoFoundries\Math\Stats::STATS_REJECT_NULL);
         $this->s1->setData($this->data1);
 
-        $this->s2a = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_IGNORE_NULL);
+        $this->s2a = new \HuasoFoundries\Math\Stats(\HuasoFoundries\Math\Stats::STATS_IGNORE_NULL);
         $this->s2a->setData($this->data2);
 
-        $this->s2b = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_USE_NULL_AS_ZERO);
+        $this->s2b = new \HuasoFoundries\Math\Stats(\HuasoFoundries\Math\Stats::STATS_USE_NULL_AS_ZERO);
         $this->s2b->setData($this->data2);
         
         // cummulative data sets
-        $this->s3 = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_REJECT_NULL);
-        $this->s3->setData($this->data3, \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
-        $this->s4a = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_IGNORE_NULL);
-        $this->s4a->setData($this->data4, \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
-        $this->s4b = new \PEAR\Math\Stats(\PEAR\Math\Stats::STATS_USE_NULL_AS_ZERO);
-        $this->s4b->setData($this->data4, \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
+        $this->s3 = new \HuasoFoundries\Math\Stats(\HuasoFoundries\Math\Stats::STATS_REJECT_NULL);
+        $this->s3->setData($this->data3, \HuasoFoundries\Math\Stats::STATS_DATA_CUMMULATIVE);
+        $this->s4a = new \HuasoFoundries\Math\Stats(\HuasoFoundries\Math\Stats::STATS_IGNORE_NULL);
+        $this->s4a->setData($this->data4, \HuasoFoundries\Math\Stats::STATS_DATA_CUMMULATIVE);
+        $this->s4b = new \HuasoFoundries\Math\Stats(\HuasoFoundries\Math\Stats::STATS_USE_NULL_AS_ZERO);
+        $this->s4b->setData($this->data4, \HuasoFoundries\Math\Stats::STATS_DATA_CUMMULATIVE);
     }
 
     protected function _after()

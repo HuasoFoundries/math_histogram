@@ -1,5 +1,5 @@
 <?php
-namespace PEAR\Histogram\Printer;
+namespace HuasoFoundries\Histogram\Printer;
 
 /**
  * Base class for histogram printer objects
@@ -86,7 +86,7 @@ class Common
     public function setHistogram(&$hist)
     {
 
-        if (\PEAR\Histogram\Histogram::isValidHistogram($hist)) {
+        if (\HuasoFoundries\Histogram\Histogram::isValidHistogram($hist)) {
             $this->_hist = &$hist;
             return true;
         } else {

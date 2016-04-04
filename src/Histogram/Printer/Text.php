@@ -1,5 +1,5 @@
 <?php
-namespace PEAR\Histogram\Printer;
+namespace HuasoFoundries\Histogram\Printer;
 
 /**
  * Class to print text representations of  a Math_Histogram object
@@ -35,7 +35,7 @@ class Text extends Common
         if (isset($this->_options['histogramBinMode'])) {
             $binmode = $this->_options['histogramBinMode'];
         } else {
-            $binmode = \PEAR\Histogram\Histogram::HISTOGRAM_HI_BINS;
+            $binmode = \HuasoFoundries\Histogram\Histogram::HISTOGRAM_HI_BINS;
         }
         $bins = $this->_hist->getBins($binmode);
         $binopts = $this->_hist->getBinOptions();
@@ -44,7 +44,7 @@ class Text extends Common
         $fmt = "%-4.3f (%-4d) |%s\n";
         $maxfreq = max(array_values($bins));
         $total = count($hdata);
-        $out = ($this->_hist->_type == \PEAR\Histogram\Histogram::HISTOGRAM_CUMMULATIVE) ? "Cummulative Frequency" : "Histogram";
+        $out = ($this->_hist->_type == \HuasoFoundries\Histogram\Histogram::HISTOGRAM_CUMMULATIVE) ? "Cummulative Frequency" : "Histogram";
         $out .= "\n\tNumber of bins: {$binopts['nbins']}\n";
         $out .= "\tPlot range: [{$binopts['rangeLow']}, {$binopts['rangeHigh']}]\n";
         $out .= "\tData range: [" . min($hdata) . ", " . max($hdata) . "]\n";
@@ -92,8 +92,8 @@ class Text extends Common
     public function printHistogram(&$hist, $options = array())
     {
 
-        $printer = new \PEAR\Histogram\Printer\Text();
-        return \PEAR\Histogram\Printer\Common::_doStaticPrint($printer, $hist, $options);
+        $printer = new \HuasoFoundries\Histogram\Printer\Text();
+        return \HuasoFoundries\Histogram\Printer\Common::_doStaticPrint($printer, $hist, $options);
     }
 
     /**

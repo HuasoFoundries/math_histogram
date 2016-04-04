@@ -1,53 +1,10 @@
 <?php
-namespace PEAR\Math;
+namespace HuasoFoundries\Math;
 
 /**
  * @package Math_Stats
  * @author Jesus M. Castagnetto <jmcastagnetto@php.net>
- */
-
-/**
- * A class to calculate descriptive statistics from a data set.
- * Data sets can be simple arrays of data, or a cummulative hash.
- * The second form is useful when passing large data set,
- * for example the data set:
  *
- * <pre>
- * $data1 = array (1,2,1,1,1,1,3,3,4.1,3,2,2,4.1,1,1,2,3,3,2,2,1,1,2,2);
- * </pre>
- *
- * can be epxressed more compactly as:
- *
- * <pre>
- * $data2 = array('1'=>9, '2'=>8, '3'=>5, '4.1'=>2);
- * </pre>
- *
- * Example of use:
- *
- * <pre>
- * $s = new \Math\Stats();
- * $s->setData($data1);
- * // or
- * // $s->setData($data2, self::STATS_DATA_CUMMULATIVE);
- * $stats = $s->calcBasic();
- * echo 'Mean: '.$stats['mean'].' StDev: '.$stats['stdev'].' <br />\n';
- *
- * // using data with nulls
- * // first ignoring them:
- * $data3 = array(1.2, 'foo', 2.4, 3.1, 4.2, 3.2, null, 5.1, 6.2);
- * $s->setNullOption(self::STATS_IGNORE_NULL);
- * $s->setData($data3);
- * $stats3 = $s->calcFull();
- *
- * // and then assuming nulls == 0
- * $s->setNullOption(self::STATS_USE_NULL_AS_ZERO);
- * $s->setData($data3);
- * $stats3 = $s->calcFull();
- * </pre>
- *
- * Originally this class was part of NumPHP (Numeric PHP package)
- *
- * @author  Jesus M. Castagnetto <jmcastagnetto@php.net>
  * @version 0.9
  * @access  public
  * @package Math_Stats

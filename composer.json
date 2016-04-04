@@ -12,9 +12,9 @@
     "version": "0.2.0",
     "license": "PHP",
     "autoload": {
-        "psr-0": {
-            "PEAR\\Math": "./",
-            "PEAR\\Histogram": "./"
+        "psr-4": {
+            "HuasoFoundries\\Math\\": "src/Math",
+            "HuasoFoundries\\Histogram\\": "src/Histogram"
         }
     },
     "description": "More info available on: http://pear.php.net/package/Math_Stats",

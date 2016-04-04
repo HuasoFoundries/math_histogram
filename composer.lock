@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d241542b5dd33918804d481ea2d58a8a",
-    "content-hash": "9d2c5319ca6162987dc665df192e132f",
+    "hash": "3076e101595fef0be0fe1530d7905390",
+    "content-hash": "becd0ac5e029b423a073c2e22b1e1e1f",
     "packages": [
         {
             "name": "pear/pear_exception",

@@ -1,5 +1,5 @@
 <?php
-namespace PEAR\Histogram;
+namespace HuasoFoundries\Histogram;
 
 class Histogram extends AbstractHistogram
 {
@@ -110,10 +110,10 @@ class Histogram extends AbstractHistogram
      *
      * @see Math_Stats
      */
-    public function calculate($statsMode = \PEAR\Math\Stats::STATS_BASIC)
+    public function calculate($statsMode = \HuasoFoundries\Math\Stats::STATS_BASIC)
     {
 
-        $this->_stats = new \PEAR\Math\Stats();
+        $this->_stats = new \HuasoFoundries\Math\Stats();
 
         $this->_statsMode = $statsMode;
         $delta = ($this->_rangeHigh - $this->_rangeLow) / $this->_nbins;
@@ -231,7 +231,7 @@ class Histogram extends AbstractHistogram
     public static function isValidHistogram(&$hist)
     {
 
-        return (is_object($hist) && is_a($hist, '\PEAR\Histogram\Histogram'));
+        return (is_object($hist) && is_a($hist, '\HuasoFoundries\Histogram\Histogram'));
     }
 
     /**
@@ -256,11 +256,11 @@ class Histogram extends AbstractHistogram
     public function generatePlot(&$printer)
     {
 
-        if (is_object($printer) && is_a($printer, '\PEAR\Histogram\Printer\Common')) {
+        if (is_object($printer) && is_a($printer, '\HuasoFoundries\Histogram\Printer\Common')) {
             $printer->setHistogram($this);
             return $printer->generateOutput();
         } else {
-            throw new \PEAR_Exception('Invalid object, expecting a \PEAR\Histogram\Printer\* instance');
+            throw new \PEAR_Exception('Invalid object, expecting a \HuasoFoundries\Histogram\Printer\* instance');
         }
     }
 

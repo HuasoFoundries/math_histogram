@@ -5,7 +5,7 @@
 
 
 
-This Package is a fork/refactor classic PEAR's [Math_Stats](http://pear.php.net/package/Math_Stats) and [Math_Histogram](http://pear.php.net/package/Math_Histogram), adapted to use PSR4 autoloading, namespaces and PHP 5.5+ compatibility.
+This Package is a fork/refactor of classic PEAR's [Math_Stats](http://pear.php.net/package/Math_Stats) and [Math_Histogram](http://pear.php.net/package/Math_Histogram), adapted to use PSR4 autoloading, namespaces and PHP 5.5+ compatibility.
 
 To test, run:
 

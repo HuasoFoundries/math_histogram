@@ -9,7 +9,7 @@
         "name": "Felipe Figueroa",
         "role": "Forking and Copy Pasting"
     }],
-    "version": "0.2.0",
+    "version": "1.0.0",
     "license": "PHP",
     "autoload": {
         "psr-4": {

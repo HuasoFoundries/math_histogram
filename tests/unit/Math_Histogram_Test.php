@@ -22,11 +22,8 @@ class Math_Histogram_Test extends \Codeception\TestCase\Test
 
     protected function _before()
     {
-     // create an instance 
+        // create an instance
         $this->h = new \HuasoFoundries\Histogram\Histogram();
-
-
-   
     }
 
     protected function _after()
@@ -50,15 +47,16 @@ class Math_Histogram_Test extends \Codeception\TestCase\Test
     // tests
     public function testbigdataset()
     {
-                // let us read a bigger data set:
+        // let us read a bigger data set:
         $data = array();
-        foreach(file(__DIR__."/../_data/ex_histogram.data") as $item)
+        foreach (file(__DIR__."/../_data/ex_histogram.data") as $item) {
             $data[] = floatval(trim($item));
+        }
 
         // let's do a simple histogram
         $this->h->setType(\HuasoFoundries\Histogram\AbstractHistogram::HISTOGRAM_SIMPLE);
         // and set new bin options
-        $this->h->setBinOptions(20,1.7,2.7);
+        $this->h->setBinOptions(20, 1.7, 2.7);
         // then set a the big data set
         $this->h->setData($data);
 
@@ -68,6 +66,4 @@ class Math_Histogram_Test extends \Codeception\TestCase\Test
         print_r($this->h->getBins(\HuasoFoundries\Histogram\AbstractHistogram::HISTOGRAM_MID_BINS));
         echo $this->h->printHistogram(\HuasoFoundries\Histogram\AbstractHistogram::HISTOGRAM_MID_BINS);
     }
-
-
 }

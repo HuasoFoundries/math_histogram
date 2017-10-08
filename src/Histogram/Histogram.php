@@ -20,7 +20,6 @@ class Histogram extends AbstractHistogram
      */
     public function __construct($type = self::HISTOGRAM_SIMPLE, $nbins = -1, $rangeLow = null, $rangeHigh = null)
     {
-
         $this->setType($type);
         $this->setBinOptions($nbins, $rangeLow, $rangeHigh);
     }
@@ -36,9 +35,8 @@ class Histogram extends AbstractHistogram
      */
     public function setBinOptions($nbins, $rangeLow = null, $rangeHigh = null)
     {
-
-        $this->_nbins = (is_int($nbins) && $nbins > 2) ? $nbins : 10;
-        $this->_rangeLow = $rangeLow;
+        $this->_nbins     = (is_int($nbins) && $nbins > 2) ? $nbins : 10;
+        $this->_rangeLow  = $rangeLow;
         $this->_rangeHigh = $rangeHigh;
     }
 
@@ -53,10 +51,9 @@ class Histogram extends AbstractHistogram
      */
     public function getBinOptions()
     {
-
         return array(
-            'nbins' => $this->_nbins,
-            'rangeLow' => $this->_rangeLow,
+            'nbins'     => $this->_nbins,
+            'rangeLow'  => $this->_rangeLow,
             'rangeHigh' => $this->_rangeHigh,
         );
     }
@@ -76,7 +73,6 @@ class Histogram extends AbstractHistogram
      */
     public function setData($data)
     {
-
         $this->_clear();
         if (!is_array($data)) {
             throw new \PEAR_Exception("array of numeric data expected");
@@ -112,23 +108,22 @@ class Histogram extends AbstractHistogram
      */
     public function calculate($statsMode = \HuasoFoundries\Math\Stats::STATS_BASIC)
     {
-
         $this->_stats = new \HuasoFoundries\Math\Stats();
 
         $this->_statsMode = $statsMode;
-        $delta = ($this->_rangeHigh - $this->_rangeLow) / $this->_nbins;
-        $lastpos = 0;
-        $cumm = 0;
-        $data = $this->_histogramData();
-        $ndata = count($data);
-        $ignoreList = array();
+        $delta            = ($this->_rangeHigh - $this->_rangeLow) / $this->_nbins;
+        $lastpos          = 0;
+        $cumm             = 0;
+        $data             = $this->_histogramData();
+        $ndata            = count($data);
+        $ignoreList       = array();
 
         for ($i = 0; $i < $this->_nbins; $i++) {
-            $loBin = $this->_rangeLow + $i * $delta;
-            $hiBin = $loBin + $delta;
-            $this->_bins[$i]["low"] = $loBin;
+            $loBin                   = $this->_rangeLow + $i * $delta;
+            $hiBin                   = $loBin + $delta;
+            $this->_bins[$i]["low"]  = $loBin;
             $this->_bins[$i]["high"] = $hiBin;
-            $this->_bins[$i]["mid"] = ($hiBin + $loBin) / 2;
+            $this->_bins[$i]["mid"]  = ($hiBin + $loBin) / 2;
             if ($this->_type == self::HISTOGRAM_CUMMULATIVE) {
                 $this->_bins[$i]["count"] = $cumm;
             } else {
@@ -167,7 +162,6 @@ class Histogram extends AbstractHistogram
      */
     public function getDataStats()
     {
-
         if ($this->isCalculated()) {
             $this->_stats->setData($this->_data);
 
@@ -185,7 +179,6 @@ class Histogram extends AbstractHistogram
      */
     public function getHistogramDataStats()
     {
-
         if ($this->isCalculated()) {
             $this->_stats->setData($this->_histogramData());
             return $this->_stats->calc($this->_statsMode);
@@ -205,14 +198,13 @@ class Histogram extends AbstractHistogram
      */
     public function toSeparated($mode = self::HISTOGRAM_MID_BINS, $separator = ", ")
     {
-
         $bins = $this->getBins($mode);
         if (\PEAR::isError($bins)) {
             return $bins;
         }
 
         $nbins = count($bins);
-        $out = array("# bin{$separator}frequency");
+        $out   = array("# bin{$separator}frequency");
         foreach ($bins as $bin => $freq) {
             $out[] = "{$bin}{$separator}{$freq}";
         }
@@ -230,7 +222,6 @@ class Histogram extends AbstractHistogram
      */
     public static function isValidHistogram(&$hist)
     {
-
         return (is_object($hist) && is_a($hist, '\HuasoFoundries\Histogram\Histogram'));
     }
 
@@ -243,7 +234,6 @@ class Histogram extends AbstractHistogram
      */
     public function isCalculated()
     {
-
         return !empty($this->_bins);
     }
 
@@ -255,7 +245,6 @@ class Histogram extends AbstractHistogram
      */
     public function generatePlot(&$printer)
     {
-
         if (is_object($printer) && is_a($printer, '\HuasoFoundries\Histogram\Printer\Common')) {
             $printer->setHistogram($this);
             return $printer->generateOutput();
@@ -274,7 +263,6 @@ class Histogram extends AbstractHistogram
      */
     public function printHistogram($mode = self::HISTOGRAM_HI_BINS)
     {
-
         if (!$this->isCalculated()) {
             throw new \PEAR_Exception("histogram has not been calculated");
         }
@@ -285,10 +273,10 @@ class Histogram extends AbstractHistogram
         $out .= "\tData range: [" . min($hdata) . ", " . max($hdata) . "]\n";
         $out .= "\tOriginal data range: [" . min($this->_data) . ", " . max($this->_data) . "]\n";
         $out .= "BIN (FREQUENCY) ASCII_BAR (%)\n";
-        $fmt = "%-4.3f (%-4d) |%s\n";
-        $bins = $this->_filterBins($mode);
+        $fmt     = "%-4.3f (%-4d) |%s\n";
+        $bins    = $this->_filterBins($mode);
         $maxfreq = max(array_values($bins));
-        $total = count($this->_data);
+        $total   = count($this->_data);
         foreach ($bins as $bin => $freq) {
             $out .= sprintf($fmt, $bin, $freq, $this->_bar($freq, $maxfreq, $total));
         }
@@ -307,16 +295,14 @@ class Histogram extends AbstractHistogram
      */
     public function _bar($freq, $maxfreq, $total)
     {
-
-        $fact = floatval(($maxfreq > 40) ? 40 / $maxfreq : 1);
+        $fact  = floatval(($maxfreq > 40) ? 40 / $maxfreq : 1);
         $niter = round($freq * $fact);
-        $out = "";
+        $out   = "";
         for ($i = 0; $i < $niter; $i++) {
             $out .= "*";
         }
 
         return $out . sprintf(" (%.1f%%)", $freq / $total * 100);
-
     }
 
     /**
@@ -328,11 +314,10 @@ class Histogram extends AbstractHistogram
      */
     public function _filterBins($mode)
     {
-
         $map = array(
             self::HISTOGRAM_MID_BINS => "mid",
-            self::HISTOGRAM_LO_BINS => "low",
-            self::HISTOGRAM_HI_BINS => "high",
+            self::HISTOGRAM_LO_BINS  => "low",
+            self::HISTOGRAM_HI_BINS  => "high",
         );
         $filtered = array();
         foreach ($this->_bins as $bin) {
@@ -352,7 +337,6 @@ class Histogram extends AbstractHistogram
      */
     public function _histogramData()
     {
-
         $data = array();
         foreach ($this->_data as $val) {
             if ($val < $this->_rangeLow || $val > $this->_rangeHigh) {
@@ -364,7 +348,6 @@ class Histogram extends AbstractHistogram
 
         return $data;
     }
-
 }
 
 // vim: ts=4:sw=4:et:

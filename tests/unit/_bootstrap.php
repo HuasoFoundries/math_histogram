@@ -937,4 +937,3 @@ $GLOBALS['Center_out2'] = <<< EOD
 [quartile_skewness_coefficient : 0.2]
 
 EOD;
-

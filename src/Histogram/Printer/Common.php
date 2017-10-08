@@ -43,7 +43,6 @@ class Common
      */
     public function __construct($hist = null, $options = null)
     {
-
         $this->setHistogram($hist);
         $this->setOptions($options);
     }
@@ -60,7 +59,6 @@ class Common
      */
     public function setOptions($options)
     {
-
         if (!is_array($options)) {
             $this->_options = null;
             return false;
@@ -85,7 +83,6 @@ class Common
      */
     public function setHistogram(&$hist)
     {
-
         if (\HuasoFoundries\Histogram\Histogram::isValidHistogram($hist)) {
             $this->_hist = &$hist;
             return true;
@@ -104,7 +101,6 @@ class Common
      */
     public function generateOutput()
     {
-
         throw new \PEAR_Exception('Unimplemented method');
     }
 
@@ -117,7 +113,6 @@ class Common
      */
     public function printOutput()
     {
-
         throw new \PEAR_Exception('Unimplemented method');
     }
 
@@ -133,7 +128,6 @@ class Common
      */
     public function printHistogram(&$hist, $options = array())
     {
-
         throw new \PEAR_Exception('Unimplemented method');
     }
 
@@ -149,7 +143,6 @@ class Common
      */
     public function _doStaticPrint(&$printer, &$hist, $options)
     {
-
         if (!$printer->setHistogram($hist)) {
             throw new \PEAR_Exception('Not a valid Histogram object');
         }
@@ -161,7 +154,6 @@ class Common
         unset($printer);
         return $err;
     }
-
 }
 
 // vim: ts=4:sw=4:et:

@@ -4,7 +4,7 @@
 
 
     $data = array();
-    $fp = fopen(__DIR__."/../../tests/_data/bigcummulativedata.dat", "r");
+    $fp   = fopen(__DIR__."/../../tests/_data/bigcummulativedata.dat", "r");
     
 
     
@@ -17,10 +17,10 @@
     
 
     try {
-    $stats = $s ->calcFull();
+        $stats = $s ->calcFull();
 
-       //print_r($stats);
-    echo "Using Math_Stats:\n"
+        //print_r($stats);
+        echo "Using Math_Stats:\n"
         . "mean = {$stats['mean']}\n"
         . "SEmean = {$stats['std_error_of_mean']}\n"
         . "std dev = {$stats['stdev']}\n"
@@ -41,11 +41,8 @@
         . "max = 41\n"
         . "count = 4255666\n";
         
-      //Name,Mean,SEMean,StDev,Q1,Median,Q3,Min,Max,N
+        //Name,Mean,SEMean,StDev,Q1,Median,Q3,Min,Max,N
       //SPSS,2.8627,0.0005,1.0630,2,3,4,1,41,4255666
     } catch (\Exception $e) {
         echo "\n\t Exception: ".$e->getMessage()."\n\n";
     }
-
- 
-

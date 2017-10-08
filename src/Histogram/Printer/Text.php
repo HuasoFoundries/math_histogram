@@ -20,7 +20,6 @@ class Text extends Common
      */
     public function generateOutput()
     {
-
         if (is_null($this->_hist)) {
             throw new \PEAR_Exception('Math_Histogram object has not been set');
         }
@@ -37,14 +36,14 @@ class Text extends Common
         } else {
             $binmode = \HuasoFoundries\Histogram\Histogram::HISTOGRAM_HI_BINS;
         }
-        $bins = $this->_hist->getBins($binmode);
+        $bins    = $this->_hist->getBins($binmode);
         $binopts = $this->_hist->getBinOptions();
-        $hdata = $this->_hist->getHistogramData();
-        $data = $this->_hist->getData();
-        $fmt = "%-4.3f (%-4d) |%s\n";
+        $hdata   = $this->_hist->getHistogramData();
+        $data    = $this->_hist->getData();
+        $fmt     = "%-4.3f (%-4d) |%s\n";
         $maxfreq = max(array_values($bins));
-        $total = count($hdata);
-        $out = ($this->_hist->_type == \HuasoFoundries\Histogram\Histogram::HISTOGRAM_CUMMULATIVE) ? "Cummulative Frequency" : "Histogram";
+        $total   = count($hdata);
+        $out     = ($this->_hist->_type == \HuasoFoundries\Histogram\Histogram::HISTOGRAM_CUMMULATIVE) ? "Cummulative Frequency" : "Histogram";
         $out .= "\n\tNumber of bins: {$binopts['nbins']}\n";
         $out .= "\tPlot range: [{$binopts['rangeLow']}, {$binopts['rangeHigh']}]\n";
         $out .= "\tData range: [" . min($hdata) . ", " . max($hdata) . "]\n";
@@ -68,7 +67,6 @@ class Text extends Common
      */
     public function printOutput()
     {
-
         $plot = $this->generateOutput($hist);
         if (\PEAR::isError($plot)) {
             return $plot;
@@ -91,7 +89,6 @@ class Text extends Common
      */
     public function printHistogram(&$hist, $options = array())
     {
-
         $printer = new \HuasoFoundries\Histogram\Printer\Text();
         return \HuasoFoundries\Histogram\Printer\Common::_doStaticPrint($printer, $hist, $options);
     }
@@ -107,16 +104,14 @@ class Text extends Common
      */
     public function _bar($freq, $maxfreq, $total)
     {
-
-        $fact = floatval(($maxfreq > 40) ? 40 / $maxfreq : 1);
+        $fact  = floatval(($maxfreq > 40) ? 40 / $maxfreq : 1);
         $niter = round($freq * $fact);
-        $out = "";
+        $out   = "";
         for ($i = 0; $i < $niter; $i++) {
             $out .= "*";
         }
 
         return $out . sprintf(" (%.1f%%)", $freq / $total * 100);
-
     }
 
     /**
@@ -129,7 +124,6 @@ class Text extends Common
      */
     public function _printStats($stats, $prefix = '')
     {
-
         $out = '';
         foreach ($stats as $name => $value) {
             if (is_array($value)) {
@@ -141,7 +135,6 @@ class Text extends Common
         }
         return $out;
     }
-
 }
 
 // vim: ts=4:sw=4:et:

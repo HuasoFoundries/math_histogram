@@ -26,8 +26,8 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 // making some data sets
-$data = array (2,2.3,4.5,2,2,3.2,5.3,3,4,5,1,6);
-$dnulls = array (1.1650,null, "foo",0.6268, 0.6268, 0.0751, 0.3516, -0.6965);
+$data   = array(2,2.3,4.5,2,2,3.2,5.3,3,4,5,1,6);
+$dnulls = array(1.1650,null, "foo",0.6268, 0.6268, 0.0751, 0.3516, -0.6965);
 
 // instantiating a Math_Stats object
 $s = new \PEAR\Math\Stats();
@@ -42,9 +42,9 @@ echo "\n*** A data set with nulls\n";
 print_r($dnulls);
 echo "Let's generate an error\n";
 try {
-	print_r($s->setData($dnulls));
+    print_r($s->setData($dnulls));
 } catch (\Exception $e) {
-	echo "\n\t Exception: ".$e->getMessage()."\n\n";
+    echo "\n\t Exception: ".$e->getMessage()."\n\n";
 }
 
 echo "Ignoring nulls and trying again\n";
@@ -54,9 +54,9 @@ echo "---> data after ignoring (removing) nulls\n";
 print_r($s->getData());
 echo "---> stats\n";
 try {
-	print_r($s->calcBasic());
+    print_r($s->calcBasic());
 } catch (\Exception $e) {
-	echo "\n\t Exception: ".$e->getMessage()."\n\n";
+    echo "\n\t Exception: ".$e->getMessage()."\n\n";
 }
 
 echo "Assuming nulls are zeros and doing a full stats calculation\n";
@@ -66,7 +66,7 @@ echo "---> data after setting nulls to zero\n";
 print_r($s->getData());
 echo "---> stats\n";
 try {
-	print_r($s->calcFull());
+    print_r($s->calcFull());
 } catch (\Exception $e) {
-	echo "\n\t Exception: ".$e->getMessage()."\n\n";
+    echo "\n\t Exception: ".$e->getMessage()."\n\n";
 }

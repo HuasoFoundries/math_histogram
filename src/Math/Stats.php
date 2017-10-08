@@ -17,40 +17,40 @@ class Stats
      * STATS_BASIC to generate the basic descriptive statistics
      */
     const STATS_BASIC = 1;
-/**
- * STATS_FULL to generate also higher moments, mode, median, etc.
- */
+    /**
+     * STATS_FULL to generate also higher moments, mode, median, etc.
+     */
     const STATS_FULL = 2;
 
-// Constants describing the data set format
+    // Constants describing the data set format
     /**
      * STATS_DATA_SIMPLE for an array of numeric values. This is the default.
      * e.g. $data = array(2,3,4,5,1,1,6);
      */
     const STATS_DATA_SIMPLE = 0;
-/**
- * STATS_DATA_CUMMULATIVE for an associative array of frequency values,
- * where in each array entry, the index is the data point and the
- * value the count (frequency):
- * e.g. $data = array(3=>4, 2.3=>5, 1.25=>6, 0.5=>3)
- */
+    /**
+     * STATS_DATA_CUMMULATIVE for an associative array of frequency values,
+     * where in each array entry, the index is the data point and the
+     * value the count (frequency):
+     * e.g. $data = array(3=>4, 2.3=>5, 1.25=>6, 0.5=>3)
+     */
     const STATS_DATA_CUMMULATIVE = 1;
 
-// Constants defining how to handle nulls
+    // Constants defining how to handle nulls
     /**
      * STATS_REJECT_NULL, reject data sets with null values. This is the default.
      * Any non-numeric value is considered a null in this context.
      */
     const STATS_REJECT_NULL = -1;
-/**
- * STATS_IGNORE_NULL, ignore null values and prune them from the data.
- * Any non-numeric value is considered a null in this context.
- */
+    /**
+     * STATS_IGNORE_NULL, ignore null values and prune them from the data.
+     * Any non-numeric value is considered a null in this context.
+     */
     const STATS_IGNORE_NULL = -2;
-/**
- * STATS_USE_NULL_AS_ZERO, assign the value of 0 (zero) to null values.
- * Any non-numeric value is considered a null in this context.
- */
+    /**
+     * STATS_USE_NULL_AS_ZERO, assign the value of 0 (zero) to null values.
+     * Any non-numeric value is considered a null in this context.
+     */
     const STATS_USE_NULL_AS_ZERO = -3;
 
     // properties
@@ -109,7 +109,6 @@ class Stats
      */
     public function __construct($nullOption = self::STATS_REJECT_NULL)
     {
-
         $this->_nullOption = $nullOption;
     }
 
@@ -124,20 +123,19 @@ class Stats
      */
     public function setData($arr, $opt = self::STATS_DATA_SIMPLE)
     {
-
         if (!is_array($arr)) {
             throw new \PEAR_Exception('invalid data, an array of numeric data was expected');
         }
-        $this->_data = null;
-        $this->_dataExpanded = null;
-        $this->_dataOption = null;
+        $this->_data             = null;
+        $this->_dataExpanded     = null;
+        $this->_dataOption       = null;
         $this->_calculatedValues = array();
         if ($opt == self::STATS_DATA_SIMPLE) {
             $this->_dataOption = $opt;
-            $this->_data = array_values($arr);
-        } else if ($opt == self::STATS_DATA_CUMMULATIVE) {
-            $this->_dataOption = $opt;
-            $this->_data = $arr;
+            $this->_data       = array_values($arr);
+        } elseif ($opt == self::STATS_DATA_CUMMULATIVE) {
+            $this->_dataOption   = $opt;
+            $this->_data         = $arr;
             $this->_dataExpanded = array();
         }
         return $this->_validate();
@@ -154,7 +152,6 @@ class Stats
      */
     public function getData($expanded = false)
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -175,7 +172,6 @@ class Stats
      */
     public function setNullOption($nullOption)
     {
-
         if ($nullOption == self::STATS_REJECT_NULL
             || $nullOption == self::STATS_IGNORE_NULL
             || $nullOption == self::STATS_USE_NULL_AS_ZERO) {
@@ -200,7 +196,6 @@ class Stats
      */
     public function studentize()
     {
-
         try {
             $mean = $this->mean();
         } catch (\PEAR_Exception $e) {
@@ -217,13 +212,13 @@ class Stats
         $arr = array();
         if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
             foreach ($this->_data as $val => $freq) {
-                $newval = ($val - $mean) / $std;
+                $newval         = ($val - $mean) / $std;
                 $arr["$newval"] = $freq;
             }
         } else {
             foreach ($this->_data as $val) {
                 $newval = ($val - $mean) / $std;
-                $arr[] = $newval;
+                $arr[]  = $newval;
             }
         }
         return $this->setData($arr, $this->_dataOption);
@@ -240,7 +235,6 @@ class Stats
      */
     public function center()
     {
-
         try {
             $mean = $this->mean();
         } catch (\PEAR_Exception $e) {
@@ -249,13 +243,13 @@ class Stats
         $arr = array();
         if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
             foreach ($this->_data as $val => $freq) {
-                $newval = $val - $mean;
+                $newval         = $val - $mean;
                 $arr["$newval"] = $freq;
             }
         } else {
             foreach ($this->_data as $val) {
                 $newval = $val - $mean;
-                $arr[] = $newval;
+                $arr[]  = $newval;
             }
         }
         return $this->setData($arr, $this->_dataOption);
@@ -274,13 +268,11 @@ class Stats
      */
     public function calc($mode, $returnErrorObject = true)
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
 
         if ($mode == self::STATS_BASIC) {
-
             return $this->calcBasic($returnErrorObject);
         } elseif ($mode == self::STATS_FULL) {
             return $this->calcFull($returnErrorObject);
@@ -302,17 +294,16 @@ class Stats
     public function calcBasic($returnErrorObject = true)
     {
         return array(
-            'min' => $this->__format($this->min(), $returnErrorObject),
-            'max' => $this->__format($this->max(), $returnErrorObject),
-            'sum' => $this->__format($this->sum(), $returnErrorObject),
-            'sum2' => $this->__format($this->sum2(), $returnErrorObject),
-            'count' => $this->__format($this->count(), $returnErrorObject),
-            'mean' => $this->__format($this->mean(), $returnErrorObject),
-            'stdev' => $this->__format($this->stDev(), $returnErrorObject),
+            'min'      => $this->__format($this->min(), $returnErrorObject),
+            'max'      => $this->__format($this->max(), $returnErrorObject),
+            'sum'      => $this->__format($this->sum(), $returnErrorObject),
+            'sum2'     => $this->__format($this->sum2(), $returnErrorObject),
+            'count'    => $this->__format($this->count(), $returnErrorObject),
+            'mean'     => $this->__format($this->mean(), $returnErrorObject),
+            'stdev'    => $this->__format($this->stDev(), $returnErrorObject),
             'variance' => $this->__format($this->variance(), $returnErrorObject),
-            'range' => $this->__format($this->range(), $returnErrorObject),
+            'range'    => $this->__format($this->range(), $returnErrorObject),
         );
-
     }
 
     /**
@@ -327,27 +318,26 @@ class Stats
      */
     public function calcFull($returnErrorObject = true)
     {
-
         return array(
-            'min' => $this->__format($this->min(), $returnErrorObject),
-            'max' => $this->__format($this->max(), $returnErrorObject),
-            'sum' => $this->__format($this->sum(), $returnErrorObject),
-            'sum2' => $this->__format($this->sum2(), $returnErrorObject),
-            'count' => $this->__format($this->count(), $returnErrorObject),
-            'mean' => $this->__format($this->mean(), $returnErrorObject),
-            'median' => $this->__format($this->median(), $returnErrorObject),
-            'mode' => $this->__format($this->mode(), $returnErrorObject),
-            'midrange' => $this->__format($this->midrange(), $returnErrorObject),
-            'geometric_mean' => $this->__format($this->geometricMean(), $returnErrorObject),
-            'harmonic_mean' => $this->__format($this->harmonicMean(), $returnErrorObject),
-            'stdev' => $this->__format($this->stDev(), $returnErrorObject),
-            'absdev' => $this->__format($this->absDev(), $returnErrorObject),
-            'variance' => $this->__format($this->variance(), $returnErrorObject),
-            'range' => $this->__format($this->range(), $returnErrorObject),
-            'std_error_of_mean' => $this->__format($this->stdErrorOfMean(), $returnErrorObject),
-            'skewness' => $this->__format($this->skewness(), $returnErrorObject),
-            'kurtosis' => $this->__format($this->kurtosis(), $returnErrorObject),
-            'coeff_of_variation' => $this->__format($this->coeffOfVariation(), $returnErrorObject),
+            'min'                    => $this->__format($this->min(), $returnErrorObject),
+            'max'                    => $this->__format($this->max(), $returnErrorObject),
+            'sum'                    => $this->__format($this->sum(), $returnErrorObject),
+            'sum2'                   => $this->__format($this->sum2(), $returnErrorObject),
+            'count'                  => $this->__format($this->count(), $returnErrorObject),
+            'mean'                   => $this->__format($this->mean(), $returnErrorObject),
+            'median'                 => $this->__format($this->median(), $returnErrorObject),
+            'mode'                   => $this->__format($this->mode(), $returnErrorObject),
+            'midrange'               => $this->__format($this->midrange(), $returnErrorObject),
+            'geometric_mean'         => $this->__format($this->geometricMean(), $returnErrorObject),
+            'harmonic_mean'          => $this->__format($this->harmonicMean(), $returnErrorObject),
+            'stdev'                  => $this->__format($this->stDev(), $returnErrorObject),
+            'absdev'                 => $this->__format($this->absDev(), $returnErrorObject),
+            'variance'               => $this->__format($this->variance(), $returnErrorObject),
+            'range'                  => $this->__format($this->range(), $returnErrorObject),
+            'std_error_of_mean'      => $this->__format($this->stdErrorOfMean(), $returnErrorObject),
+            'skewness'               => $this->__format($this->skewness(), $returnErrorObject),
+            'kurtosis'               => $this->__format($this->kurtosis(), $returnErrorObject),
+            'coeff_of_variation'     => $this->__format($this->coeffOfVariation(), $returnErrorObject),
             'sample_central_moments' => array(
                 1 => $this->__format($this->sampleCentralMoment(1), $returnErrorObject),
                 2 => $this->__format($this->sampleCentralMoment(2), $returnErrorObject),
@@ -362,13 +352,13 @@ class Stats
                 4 => $this->__format($this->sampleRawMoment(4), $returnErrorObject),
                 5 => $this->__format($this->sampleRawMoment(5), $returnErrorObject),
             ),
-            'frequency' => $this->__format($this->frequency(), $returnErrorObject),
-            'quartiles' => $this->__format($this->quartiles(), $returnErrorObject),
-            'interquartile_range' => $this->__format($this->interquartileRange(), $returnErrorObject),
-            'interquartile_mean' => $this->__format($this->interquartileMean(), $returnErrorObject),
-            'quartile_deviation' => $this->__format($this->quartileDeviation(), $returnErrorObject),
+            'frequency'                      => $this->__format($this->frequency(), $returnErrorObject),
+            'quartiles'                      => $this->__format($this->quartiles(), $returnErrorObject),
+            'interquartile_range'            => $this->__format($this->interquartileRange(), $returnErrorObject),
+            'interquartile_mean'             => $this->__format($this->interquartileMean(), $returnErrorObject),
+            'quartile_deviation'             => $this->__format($this->quartileDeviation(), $returnErrorObject),
             'quartile_variation_coefficient' => $this->__format($this->quartileVariationCoefficient(), $returnErrorObject),
-            'quartile_skewness_coefficient' => $this->__format($this->quartileSkewnessCoefficient(), $returnErrorObject),
+            'quartile_skewness_coefficient'  => $this->__format($this->quartileSkewnessCoefficient(), $returnErrorObject),
         );
     }
 
@@ -383,7 +373,6 @@ class Stats
      */
     public function min()
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -412,7 +401,6 @@ class Stats
      */
     public function max()
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -439,15 +427,13 @@ class Stats
      */
     public function sum()
     {
-
         if (!array_key_exists('sum', $this->_calculatedValues)) {
             try {
-                $sum = $this->sumN(1);
+                $sum                            = $this->sumN(1);
                 $this->_calculatedValues['sum'] = $sum;
             } catch (\PEAR_Exception $e) {
                 return $sum;
             }
-
         }
         return $this->_calculatedValues['sum'];
     }
@@ -464,10 +450,9 @@ class Stats
      */
     public function sum2()
     {
-
         if (!array_key_exists('sum2', $this->_calculatedValues)) {
             try {
-                $sum2 = $this->sumN(2);
+                $sum2                            = $this->sumN(2);
                 $this->_calculatedValues['sum2'] = $sum2;
             } catch (\PEAR_Exception $e) {
                 return $sum2;
@@ -489,7 +474,6 @@ class Stats
      */
     public function sumN($n)
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -518,15 +502,13 @@ class Stats
      */
     public function product()
     {
-
         if (!array_key_exists('product', $this->_calculatedValues)) {
             try {
-                $product = $this->productN(1);
+                $product                            = $this->productN(1);
                 $this->_calculatedValues['product'] = $product;
             } catch (\PEAR_Exception $e) {
                 return $product;
             }
-
         }
         return $this->_calculatedValues['product'];
     }
@@ -544,11 +526,10 @@ class Stats
      */
     public function productN($n)
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
-        $prodN = 1.0;
+        $prodN   = 1.0;
         $partial = array();
         if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
             foreach ($this->_data as $val => $freq) {
@@ -558,7 +539,7 @@ class Stats
                 $prodN *= $freq * pow((double) $val, (double) $n);
                 if ($prodN > 10000 * $n) {
                     $partial[] = $prodN;
-                    $prodN = 1.0;
+                    $prodN     = 1.0;
                 }
             }
         } else {
@@ -569,7 +550,7 @@ class Stats
                 $prodN *= pow((double) $val, (double) $n);
                 if ($prodN > 10 * $n) {
                     $partial[] = $prodN;
-                    $prodN = 1.0;
+                    $prodN     = 1.0;
                 }
             }
         }
@@ -588,7 +569,6 @@ class Stats
         } else {
             return $prodN;
         }
-
     }
 
     /**
@@ -601,7 +581,6 @@ class Stats
      */
     public function count()
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -628,7 +607,6 @@ class Stats
      */
     public function mean()
     {
-
         if (!array_key_exists('mean', $this->_calculatedValues)) {
             try {
                 $sum = $this->sum();
@@ -641,7 +619,6 @@ class Stats
             } catch (\PEAR_Exception $e) {
                 return $sum;
             }
-
         }
         return $this->_calculatedValues['mean'];
     }
@@ -654,7 +631,6 @@ class Stats
      */
     public function range()
     {
-
         if (!array_key_exists('range', $this->_calculatedValues)) {
             try {
                 $min = $this->min();
@@ -664,14 +640,11 @@ class Stats
                     return $max;
                 }
                 $this->_calculatedValues['range'] = $max - $min;
-
             } catch (\PEAR_Exception $e) {
                 return $min;
             }
-
         }
         return $this->_calculatedValues['range'];
-
     }
 
     /**
@@ -686,7 +659,6 @@ class Stats
      */
     public function variance()
     {
-
         if (!array_key_exists('variance', $this->_calculatedValues)) {
             try {
                 $variance = $this->__calcVariance();
@@ -710,7 +682,6 @@ class Stats
      */
     public function stDev()
     {
-
         if (!array_key_exists('stDev', $this->_calculatedValues)) {
             try {
                 $variance = $this->variance();
@@ -738,7 +709,6 @@ class Stats
      */
     public function varianceWithMean($mean)
     {
-
         return $this->__calcVariance($mean);
     }
 
@@ -778,7 +748,6 @@ class Stats
      */
     public function absDev()
     {
-
         if (!array_key_exists('absDev', $this->_calculatedValues)) {
             try {
                 $absDev = $this->__calcAbsoluteDeviation();
@@ -805,7 +774,6 @@ class Stats
      */
     public function absDevWithMean($mean)
     {
-
         return $this->__calcAbsoluteDeviation($mean);
     }
 
@@ -829,7 +797,6 @@ class Stats
      */
     public function skewness()
     {
-
         if (!array_key_exists('skewness', $this->_calculatedValues)) {
             try {
                 $count = $this->count();
@@ -872,9 +839,7 @@ class Stats
      */
     public function kurtosis()
     {
-
         if (!array_key_exists('kurtosis', $this->_calculatedValues)) {
-
             try {
                 $count = $this->count();
                 try {
@@ -911,7 +876,6 @@ class Stats
      */
     public function median()
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -951,7 +915,6 @@ class Stats
      */
     public function mode()
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -965,7 +928,7 @@ class Stats
             $mcount = 1;
             foreach ($arr as $val => $freq) {
                 if ($mcount == 1) {
-                    $mode = array($val);
+                    $mode  = array($val);
                     $mfreq = $freq;
                     $mcount++;
                     continue;
@@ -977,7 +940,6 @@ class Stats
                 if ($mfreq > $freq) {
                     break;
                 }
-
             }
             $this->_calculatedValues['mode'] = $mode;
         }
@@ -997,7 +959,6 @@ class Stats
      */
     public function midrange()
     {
-
         if (!array_key_exists('midrange', $this->_calculatedValues)) {
             try {
                 $min = $this->min();
@@ -1027,7 +988,6 @@ class Stats
      */
     public function geometricMean()
     {
-
         if (!array_key_exists('geometricMean', $this->_calculatedValues)) {
             try {
                 $count = $this->count();
@@ -1069,7 +1029,6 @@ class Stats
      */
     public function harmonicMean()
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -1117,7 +1076,6 @@ class Stats
      */
     public function sampleCentralMoment($n)
     {
-
         if (!is_int($n) || $n < 1) {
             throw new \PEAR_Exception('moment must be a positive integer >= 1.');
         }
@@ -1157,7 +1115,6 @@ class Stats
      */
     public function sampleRawMoment($n)
     {
-
         if (!is_int($n) || $n < 1) {
             throw new \PEAR_Exception('moment must be a positive integer >= 1.');
         }
@@ -1193,7 +1150,6 @@ class Stats
      */
     public function coeffOfVariation()
     {
-
         if (!array_key_exists('coeffOfVariation', $this->_calculatedValues)) {
             try {
                 $mean = $this->mean();
@@ -1235,7 +1191,6 @@ class Stats
      */
     public function stdErrorOfMean()
     {
-
         if (!array_key_exists('stdErrorOfMean', $this->_calculatedValues)) {
             try {
                 $count = $this->count();
@@ -1264,7 +1219,6 @@ class Stats
      */
     public function frequency()
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -1297,7 +1251,6 @@ class Stats
      */
     public function quartiles()
     {
-
         if (!array_key_exists('quartiles', $this->_calculatedValues)) {
             try {
                 $q1 = $this->percentile(25);
@@ -1311,7 +1264,6 @@ class Stats
                 } catch (\PEAR_Exception $e) {
                     return $q2;
                 }
-
             } catch (\PEAR_Exception $e) {
                 return $q1;
             }
@@ -1340,17 +1292,16 @@ class Stats
      */
     public function interquartileMean()
     {
-
         if (!array_key_exists('interquartileMean', $this->_calculatedValues)) {
             try {
                 $quart = $this->quartiles();
             } catch (\PEAR_Exception $e) {
                 return $quart;
             }
-            $q3 = $quart['75'];
-            $q1 = $quart['25'];
+            $q3  = $quart['75'];
+            $q1  = $quart['25'];
             $sum = 0;
-            $n = 0;
+            $n   = 0;
             foreach ($this->getData(true) as $val) {
                 if ($val >= $q1 && $val <= $q3) {
                     $sum += $val;
@@ -1381,15 +1332,14 @@ class Stats
      */
     public function interquartileRange()
     {
-
         if (!array_key_exists('interquartileRange', $this->_calculatedValues)) {
             try {
                 $quart = $this->quartiles();
             } catch (\PEAR_Exception $e) {
                 return $quart;
             }
-            $q3 = $quart['75'];
-            $q1 = $quart['25'];
+            $q3                                            = $quart['75'];
+            $q1                                            = $quart['25'];
             $this->_calculatedValues['interquartileRange'] = $q3 - $q1;
         }
         return $this->_calculatedValues['interquartileRange'];
@@ -1409,7 +1359,6 @@ class Stats
      */
     public function quartileDeviation()
     {
-
         if (!array_key_exists('quartileDeviation', $this->_calculatedValues)) {
             try {
                 $iqr = $this->interquartileRange();
@@ -1435,17 +1384,16 @@ class Stats
      */
     public function quartileVariationCoefficient()
     {
-
         if (!array_key_exists('quartileVariationCoefficient', $this->_calculatedValues)) {
             try {
                 $quart = $this->quartiles();
             } catch (\PEAR_Exception $e) {
                 return $quart;
             }
-            $q3 = $quart['75'];
-            $q1 = $quart['25'];
-            $d = $q3 - $q1;
-            $s = $q3 + $q1;
+            $q3                                                      = $quart['75'];
+            $q1                                                      = $quart['25'];
+            $d                                                       = $q3 - $q1;
+            $s                                                       = $q3 + $q1;
             $this->_calculatedValues['quartileVariationCoefficient'] = 100 * $d / $s;
         }
         return $this->_calculatedValues['quartileVariationCoefficient'];
@@ -1466,18 +1414,17 @@ class Stats
      */
     public function quartileSkewnessCoefficient()
     {
-
         if (!array_key_exists('quartileSkewnessCoefficient', $this->_calculatedValues)) {
             try {
                 $quart = $this->quartiles();
             } catch (\PEAR_Exception $e) {
                 return $quart;
             }
-            $q3 = $quart['75'];
-            $q2 = $quart['50'];
-            $q1 = $quart['25'];
-            $d = $q3 - 2 * $q2 + $q1;
-            $s = $q3 - $q1;
+            $q3                                                     = $quart['75'];
+            $q2                                                     = $quart['50'];
+            $q1                                                     = $quart['25'];
+            $d                                                      = $q3 - 2 * $q2 + $q1;
+            $s                                                      = $q3 - $q1;
             $this->_calculatedValues['quartileSkewnessCoefficient'] = $d / $s;
         }
         return $this->_calculatedValues['quartileSkewnessCoefficient'];
@@ -1528,7 +1475,7 @@ class Stats
         } elseif ($obsidx > $count) {
             return $data[($count - 1)];
         } else {
-            $left = floor($obsidx - 1);
+            $left  = floor($obsidx - 1);
             $right = ceil($obsidx - 1);
             return ($data[$left] + $data[$right]) / 2;
         }
@@ -1551,7 +1498,6 @@ class Stats
      */
     public function __sumdiff($power, $mean = null)
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -1561,7 +1507,6 @@ class Stats
             } catch (\PEAR_Exception $e) {
                 return $mean;
             }
-
         }
         $sdiff = 0;
         if ($this->_dataOption == self::STATS_DATA_CUMMULATIVE) {
@@ -1572,7 +1517,6 @@ class Stats
             foreach ($this->_data as $val) {
                 $sdiff += pow((double) ($val - $mean), (double) $power);
             }
-
         }
         return $sdiff;
     }
@@ -1589,7 +1533,6 @@ class Stats
      */
     public function __calcVariance($mean = null)
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -1622,7 +1565,6 @@ class Stats
      */
     public function __calcAbsoluteDeviation($mean = null)
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -1652,7 +1594,6 @@ class Stats
      */
     public function __sumabsdev($mean = null)
     {
-
         if ($this->_data == null) {
             throw new \PEAR_Exception('data has not been set');
         }
@@ -1686,7 +1627,6 @@ class Stats
      */
     public function __format($v, $useErrorObject = true)
     {
-
         if (is_a($v, '\PEAR_Exception') && $useErrorObject == false) {
             return $v->getMessage();
         } else {
@@ -1705,7 +1645,6 @@ class Stats
      */
     public function _validate()
     {
-
         $cummulativeData = ($this->_dataOption == self::STATS_DATA_CUMMULATIVE);
         foreach ($this->_data as $key => $value) {
             $d = ($cummulativeData) ? $key : $value;
@@ -1769,7 +1708,6 @@ class Stats
         }
         return true;
     }
-
 }
 
 // vim: ts=4:sw=4:et:

@@ -15,13 +15,12 @@ namespace HuasoFoundries\Histogram;
 
 class AbstractHistogram
 {
-
     const HISTOGRAM_ALL_BINS = 1;
     const HISTOGRAM_MID_BINS = 2;
-    const HISTOGRAM_LO_BINS = 3;
-    const HISTOGRAM_HI_BINS = 4;
+    const HISTOGRAM_LO_BINS  = 3;
+    const HISTOGRAM_HI_BINS  = 4;
 
-    const HISTOGRAM_SIMPLE = 1;
+    const HISTOGRAM_SIMPLE      = 1;
     const HISTOGRAM_CUMMULATIVE = 2;
 
     // properties
@@ -90,7 +89,6 @@ class AbstractHistogram
      */
     public function __construct($type = self::HISTOGRAM_SIMPLE)
     {
-
         $this->setType($type);
     }
 
@@ -103,7 +101,6 @@ class AbstractHistogram
      */
     public function setType($type)
     {
-
         if ($type == self::HISTOGRAM_SIMPLE || $type == self::HISTOGRAM_CUMMULATIVE) {
             $this->_type = $type;
             return true;
@@ -121,14 +118,13 @@ class AbstractHistogram
      */
     public function setBinOptions($binOptions)
     {
-
         if (!is_array($binOptions)) {
             throw new \PEAR_Exception("incorrect options array");
         }
 
-        $this->_rangeLow = $binOptions["low"];
+        $this->_rangeLow  = $binOptions["low"];
         $this->_rangeHigh = $binOptions["high"];
-        $this->_nbins = $binOptions["nbins"];
+        $this->_nbins     = $binOptions["nbins"];
         return true;
     }
 
@@ -140,7 +136,6 @@ class AbstractHistogram
      */
     public function setData($data)
     {
-
     }
 
     /**
@@ -153,13 +148,11 @@ class AbstractHistogram
      */
     public function getData()
     {
-
         if (is_null($this->_data)) {
             throw new \PEAR_Exception("data has not been set");
         } else {
             return $this->_data;
         }
-
     }
 
     /**
@@ -174,13 +167,11 @@ class AbstractHistogram
      */
     public function getHistogramData()
     {
-
         if (is_null($this->_data)) {
             throw new \PEAR_Exception("data has not been set");
         } else {
             return $this->_histogramData();
         }
-
     }
 
     /**
@@ -192,7 +183,6 @@ class AbstractHistogram
      */
     public function getBins($mode = self::HISTOGRAM_ALL_BINS)
     {
-
         if (empty($this->_bins)) {
             throw new \PEAR_Exception("histogram has not been calculated");
         }
@@ -220,21 +210,20 @@ class AbstractHistogram
      */
     public function getHistogramInfo()
     {
-
         if (!empty($this->_nbins)) {
-            $data_stats = $this->getDataStats();
+            $data_stats            = $this->getDataStats();
             $getHistogramDataStats = $this->getHistogramDataStats();
             //\Util\Helpers::prdie('getHistogramInfo after $getHistogramDataStats');
 
             $info = array(
                 "type" => ($this->_type == self::HISTOGRAM_CUMMULATIVE) ?
                 "cummulative frequency" : "histogram",
-                "data_stats" => $data_stats,
+                "data_stats"      => $data_stats,
                 "hist_data_stats" => $getHistogramDataStats,
-                "bins" => $this->_bins,
-                "nbins" => $this->_nbins,
-                "range" => array(
-                    "low" => $this->_rangeLow,
+                "bins"            => $this->_bins,
+                "nbins"           => $this->_nbins,
+                "range"           => array(
+                    "low"  => $this->_rangeLow,
                     "high" => $this->_rangeHigh,
                 ),
             );
@@ -252,12 +241,11 @@ class AbstractHistogram
      */
     public function _clear()
     {
-
-        $this->_stats = null;
+        $this->_stats     = null;
         $this->_statsMode = null;
-        $this->_data = null;
-        $this->_orig = array();
-        $this->_bins = array();
+        $this->_data      = null;
+        $this->_orig      = array();
+        $this->_bins      = array();
     }
 
     /**
@@ -270,10 +258,8 @@ class AbstractHistogram
      */
     public function _histogramData()
     {
-
         return array();
     }
-
 }
 // vim: ts=4:sw=4:et:
 // vim6: fdl=1:

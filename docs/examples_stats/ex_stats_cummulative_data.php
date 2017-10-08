@@ -28,7 +28,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 // making some cummulative data sets
 
-$data = array("3"=>4, "2.333"=>5, "1.22"=>6, "0.5"=>3, "0.9"=>2, "2.4"=>7);
+$data   = array("3"=>4, "2.333"=>5, "1.22"=>6, "0.5"=>3, "0.9"=>2, "2.4"=>7);
 $dnulls = array("3"=>4, "caca"=>2, "bar is not foo"=>6, "0.5"=>3, "0.9"=>2, "2.4"=>7);
 
 // instantiate a Math_Stats object
@@ -46,28 +46,28 @@ echo "\n*** Another cummulative data set\n";
 print_r($dnulls);
 echo "Generating an error by using data with nulls\n";
 try {
-	print_r($s->setData($dnulls,  \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE));	
+    print_r($s->setData($dnulls, \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE));
 } catch (\Exception $e) {
-	echo "\n\t Exception: ".$e->getMessage()."\n\n";
+    echo "\n\t Exception: ".$e->getMessage()."\n\n";
 }
 
 
 // let's ignore nulls
 echo "Ignoring the nulls and trying again\n";
-$s->setNullOption( \PEAR\Math\Stats::STATS_IGNORE_NULL);
-$s->setData($dnulls,  \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
+$s->setNullOption(\PEAR\Math\Stats::STATS_IGNORE_NULL);
+$s->setData($dnulls, \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
 try {
-	print_r($s->calcBasic());
+    print_r($s->calcBasic());
 } catch (\Exception $e) {
-	echo "\n\t Exception: ".$e->getMessage()."\n\n";
+    echo "\n\t Exception: ".$e->getMessage()."\n\n";
 }
 
 // let's assume null == zero
 echo "Assuming that nulls are zero\n";
-$s->setNullOption( \PEAR\Math\Stats::STATS_USE_NULL_AS_ZERO);
-$s->setData($dnulls,  \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
+$s->setNullOption(\PEAR\Math\Stats::STATS_USE_NULL_AS_ZERO);
+$s->setData($dnulls, \PEAR\Math\Stats::STATS_DATA_CUMMULATIVE);
 try {
-	print_r($s->calcFull());
+    print_r($s->calcFull());
 } catch (\Exception $e) {
-	echo "\n\t Exception: ".$e->getMessage()."\n\n";
+    echo "\n\t Exception: ".$e->getMessage()."\n\n";
 }

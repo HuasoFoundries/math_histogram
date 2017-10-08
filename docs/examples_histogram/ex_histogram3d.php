@@ -4,8 +4,8 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 // let's generate some values;
 for ($i=0; $i < 100; $i++) {
-	$a['x'][$i] = rand(-1,6);
-	$a['y'][$i] = rand(-1,6);
+    $a['x'][$i] = rand(-1, 6);
+    $a['y'][$i] = rand(-1, 6);
 }
 
 $h = new \PEAR\Histogram\Histogram3D();
@@ -18,12 +18,12 @@ print_r($h->getHistogramInfo());
 
 // now, let's change the options a wee bit
 $h->setBinOptions(
-	array(
-		'low' => array( 'x' => 0, 'y' => 0),
-		'high' => array( 'x' => 5, 'y' => 5),
-		'nbins' => array( 'x' => 5, 'y' => 5)
-		)
-	);
+    array(
+        'low'   => array( 'x' => 0, 'y' => 0),
+        'high'  => array( 'x' => 5, 'y' => 5),
+        'nbins' => array( 'x' => 5, 'y' => 5)
+        )
+    );
 $h->setType(\PEAR\Histogram\AbstractHistogram::HISTOGRAM_CUMMULATIVE);
 $h->calculate();
 // and print the whole histogram info, not the different

@@ -30,7 +30,7 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
 
     protected function _before()
     {
-                // simple data sets
+        // simple data sets
         $this->s1 = new \HuasoFoundries\Math\Stats(\HuasoFoundries\Math\Stats::STATS_REJECT_NULL);
         $this->s1->setData($this->data1);
 
@@ -51,7 +51,7 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
 
     protected function _after()
     {
-                unset($this->s1);
+        unset($this->s1);
         unset($this->s2a);
         unset($this->s2b);
         unset($this->s3);
@@ -63,7 +63,7 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
 
     public function testGetData()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($GLOBALS['GetData_out1'], $this->formatArray($this->s1->getData()));
         $this->assertEquals($GLOBALS['GetData_out2'], $this->formatArray($this->s2a->getData()));
         $this->assertEquals($GLOBALS['GetData_out3'], $this->formatArray($this->s2b->getData()));
@@ -73,11 +73,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
         $this->assertEquals($GLOBALS['GetData_out7'], $this->formatArray($this->s4b->getData()));
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testCalcBasic()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($GLOBALS['CalcBasic_out1'],
             $this->formatArray($this->s1->calcBasic(false)));
         $this->assertEquals($GLOBALS['CalcBasic_out2'],
@@ -92,11 +92,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             $this->formatArray($this->s4b->calcBasic(false)));
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testCalcFull()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($GLOBALS['CalcFull_out1'],
             $this->formatArray($this->s1->calcFull(false)));
 
@@ -116,11 +116,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             $this->formatArray($this->s4b->calcFull(false)));
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testMin()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(1),
             $this->formatNumber($this->s1->min()),
             '', __DELTA);
@@ -141,11 +141,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testMax()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(6),
             $this->formatNumber($this->s1->max()),
             '', __DELTA);
@@ -166,11 +166,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testSum()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(40.3),
             $this->formatNumber($this->s1->sum()),
             '', __DELTA);
@@ -191,11 +191,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testSum2()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(162.87),
             $this->formatNumber($this->s1->sum2()),
             '', __DELTA);
@@ -216,11 +216,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testSumN()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(741.937),
             $this->formatNumber($this->s1->sumN(3)),
             '', __DELTA);
@@ -241,11 +241,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testProduct()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(505543.68),
             $this->formatNumber($this->s1->product()),
             '', __DELTA);
@@ -266,11 +266,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testProductN()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals('255574412388',
             (string) $this->s1->productN(2),
             '', __DELTA);
@@ -291,11 +291,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testCount()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(12),
             $this->formatNumber($this->s1->count()),
             '', __DELTA);
@@ -316,11 +316,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testMean()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(3.35833333333),
             $this->formatNumber($this->s1->mean()),
             '', __DELTA);
@@ -341,11 +341,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testRange()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(5),
             $this->formatNumber($this->s1->range()),
             '', __DELTA);
@@ -366,11 +366,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testVariance()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(2.50265151515),
             $this->formatNumber($this->s1->variance()),
             '', __DELTA);
@@ -391,11 +391,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testStDev()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(1.58197709059),
             $this->formatNumber($this->s1->stDev()),
             '', __DELTA);
@@ -416,11 +416,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testVarianceWithMean()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(2.50454545455),
             $this->formatNumber($this->s1->varianceWithMean(3.4)),
             '', __DELTA);
@@ -441,11 +441,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testStDevWithMean()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(1.58257557625),
             $this->formatNumber($this->s1->stDevWithMean(3.4)),
             '', __DELTA);
@@ -466,11 +466,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testAbsDev()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(2.50265151515),
             $this->formatNumber($this->s1->variance()),
             '', __DELTA);
@@ -491,11 +491,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testAbsDevWithMean()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(1.34166666667),
             $this->formatNumber($this->s1->absDevWithMean(3.4)),
             '', __DELTA);
@@ -516,11 +516,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testSkewness()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(0.211767803758),
             $this->formatNumber($this->s1->skewness()),
             '', __DELTA);
@@ -541,11 +541,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testKurtosis()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(-1.47708896609),
             $this->formatNumber($this->s1->kurtosis()),
             '', __DELTA);
@@ -566,11 +566,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testMedian()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(3.1),
             $this->formatNumber($this->s1->median()),
             '', __DELTA);
@@ -591,11 +591,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testMode()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($GLOBALS['Mode_out1'], $this->s1->mode());
         $this->assertEquals($GLOBALS['Mode_out2'], $this->s2a->mode());
         
@@ -607,11 +607,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
         $this->assertEquals($GLOBALS['Mode_out6'], $this->s4b->mode());
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testMidrange()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(3.5),
             $this->formatNumber($this->s1->midrange()),
             '', __DELTA);
@@ -632,11 +632,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testGeometricMean()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(2.98753652642),
             $this->formatNumber($this->s1->geometricMean()),
             '', __DELTA);
@@ -657,11 +657,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testHarmonicMean()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(2.98753652642),
             $this->formatNumber($this->s1->geometricMean()),
             '', __DELTA);
@@ -683,11 +683,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
         $this->s4b->harmonicMean();
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testSampleCentralMoment()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(2.29409722222),
             $this->formatNumber($this->s1->sampleCentralMoment(2)),
             '', __DELTA);
@@ -708,11 +708,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testSampleRawMoment()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(13.5725),
             $this->formatNumber($this->s1->sampleRawMoment(2)),
             '', __DELTA);
@@ -733,11 +733,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testCoeffOfVariation()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(0.471060175858),
             $this->formatNumber($this->s1->coeffOfVariation()),
             '', __DELTA);
@@ -758,11 +758,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testStdErrorOfMean()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(0.456677449552),
             $this->formatNumber($this->s1->stdErrorOfMean()),
             '', __DELTA);
@@ -783,11 +783,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testFrequency()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($GLOBALS['Frequency_out1'], $this->formatArray($this->s1->frequency()));
         $this->assertEquals($GLOBALS['Frequency_out2'], $this->formatArray($this->s2a->frequency()));
         $this->assertEquals($GLOBALS['Frequency_out3'], $this->formatArray($this->s2b->frequency()));
@@ -796,11 +796,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
         $this->assertEquals($GLOBALS['Frequency_out6'], $this->formatArray($this->s4b->frequency()));
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testQuartiles()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($GLOBALS['Quartiles_out1'], $this->formatArray($this->s1->quartiles()));
         $this->assertEquals($GLOBALS['Quartiles_out2'], $this->formatArray($this->s2a->quartiles()));
         $this->assertEquals($GLOBALS['Quartiles_out3'], $this->formatArray($this->s2b->quartiles()));
@@ -809,11 +809,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
         $this->assertEquals($GLOBALS['Quartiles_out6'], $this->formatArray($this->s4b->quartiles()));
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testInterQuartileMean()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(2.875),
             $this->formatNumber($this->s1->interquartileMean()),
             '', __DELTA);
@@ -834,11 +834,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testInterquartileRange()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(2.75),
             $this->formatNumber($this->s1->interquartileRange()),
             '', __DELTA);
@@ -859,11 +859,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testQuartileDeviation()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(1.375),
             $this->formatNumber($this->s1->quartileDeviation()),
             '', __DELTA);
@@ -884,11 +884,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testQuartileVariationCoefficient()
     {
-/*{{{*/
+        /*{{{*/
         /*
         echo "quartileVariationCoefficient\n";
         echo $this->s1->quartileVariationCoefficient() ."\n";
@@ -918,11 +918,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testQuartileSkewnessCoefficient()
     {
-/*{{{*/
+        /*{{{*/
         /*
         echo "quartileSkewnessCoefficient\n";
         echo $this->s1->quartileSkewnessCoefficient() ."\n";
@@ -952,11 +952,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testPercentile()
     {
-/*{{{*/
+        /*{{{*/
         $this->assertEquals($this->formatNumber(2),
             $this->formatNumber($this->s1->percentile(25)),
             '', __DELTA);
@@ -977,11 +977,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             '', __DELTA);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testStudentize()
     {
-/*{{{*/
+        /*{{{*/
         $this->s1->studentize();
 
         $this->setExpectedException('PEAR_Exception', 'The product of the data set is negative, geometric mean undefined.');
@@ -996,11 +996,11 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             $this->formatArray($this->s3->calcFull(false)));
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function testCenter()
     {
-/*{{{*/
+        /*{{{*/
         $this->s1->center();
         $this->assertEquals($GLOBALS['Center_out1'],
             $this->formatArray($this->s1->getData()));
@@ -1015,19 +1015,19 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
             $this->formatArray($this->s3->calcFull(false)));
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function formatNumber($n)
     {
-/*{{{*/
+        /*{{{*/
         return (float) sprintf('%.' . (__PRECISION - 1) . 'f', $n);
     }
 
-/*}}}*/
+    /*}}}*/
 
     public function formatArray($arr, $spcs = 0)
     {
-/*{{{*/
+        /*{{{*/
         $out = '';
         foreach ($arr as $key => $val) {
             $out .= str_repeat(" ", $spcs) . "[$key : ";
@@ -1039,5 +1039,4 @@ class Math_Stats_Test extends \Codeception\TestCase\Test
         }
         return $out;
     }
-
 }

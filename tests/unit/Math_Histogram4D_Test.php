@@ -19,6 +19,5 @@ class Math_Histogram4D_Test extends \Codeception\TestCase\Test
     // tests
     public function testMe()
     {
-
     }
 }

@@ -1,7 +1,7 @@
 # Math_Histogram
 
 [![Packagist](https://img.shields.io/packagist/dm/huasofoundries/math_histogram.svg)](https://packagist.org/packages/huasofoundries/math_histogram)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/build.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/build.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/build-status/master) [![StyleCI](https://styleci.io/repos/55424673/shield?branch=master)](https://styleci.io/repos/55424673)
 
 
 

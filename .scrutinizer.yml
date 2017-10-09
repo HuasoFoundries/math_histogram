@@ -1,17 +1,31 @@
 # .scrutinizer.yml
 
-checks:
-    php:
-        code_rating: true
-        duplication: true
-
 filter:
-    paths: ["src/*"]
-
+    excluded_paths:
+        - 'tests/*'
+        - 'contrib/*'
+        - 'docs*/*'
+checks:
+    php: true
+    
+coding_style:
+    php:
+        spaces:
+            around_operators:
+                multiplicative: false
+            other:
+                after_type_cast: false
 build:
     environment:
-      php: '5.5'
-
-    tests:
-        override:
-            - 'php vendor/bin/codecept run'
+        php: '7.1'
+        
+    nodes:
+        tests: true
+        analysis:
+            tests:
+                override:
+                    - 'php vendor/bin/codecept run'
+                    - 'php-scrutinizer-run'
+                    -
+                        command: phpcs-run
+                        use_website_config: true

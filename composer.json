@@ -1,18 +1,22 @@
 {
     "name": "huasofoundries/math_histogram",
-    "authors": [{
+    "authors": [
+    {
         "email": "jmcastagnetto@php.net",
         "name": "Jesus M. Castagnetto",
         "role": "Lead"
-    }, {
+    },
+    {
         "email": "amenadiel@gmail.com",
         "name": "Felipe Figueroa",
         "role": "Forking and Copy Pasting"
     }],
-    "version": "1.0.2",
-    "license": "PHP",
-    "autoload": {
-        "psr-4": {
+    "version": "1.0.3",
+    "license": "PHP-3.0",
+    "autoload":
+    {
+        "psr-4":
+        {
             "HuasoFoundries\\Math\\": "src/Math",
             "HuasoFoundries\\Histogram\\": "src/Histogram"
         }
@@ -20,16 +24,19 @@
     "description": "Fork/Refactor of PEAR's Math Stats + Math Histogram",
 
 
-    "support": {
+    "support":
+    {
         "issues": "https://github.com/huasofoundries/math_histogram/issues",
         "source": "https://github.com/huasofoundries/math_histogram"
     },
     "type": "library",
-    "require": {
+    "require":
+    {
         "php": ">=5.5",
         "pear/pear_exception": "*"
     },
-    "require-dev": {
+    "require-dev":
+    {
         "codeception/codeception": "2.1.6"
     }
 }

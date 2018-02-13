@@ -1,7 +1,8 @@
 # Math_Histogram
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cbaa2d6e11b84a2ba581bc46e24a2da7)](https://www.codacy.com/app/amenadiel/math_histogram?utm_source=github.com&utm_medium=referral&utm_content=HuasoFoundries/math_histogram&utm_campaign=badger)
 [![Packagist](https://img.shields.io/packagist/dm/huasofoundries/math_histogram.svg)](https://packagist.org/packages/huasofoundries/math_histogram)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/build.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/build.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/build-status/master) [![StyleCI](https://styleci.io/repos/55424673/shield?branch=master)](https://styleci.io/repos/55424673)
 
 
 

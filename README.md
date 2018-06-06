@@ -3,6 +3,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/cbaa2d6e11b84a2ba581bc46e24a2da7)](https://www.codacy.com/app/amenadiel/math_histogram?utm_source=github.com&utm_medium=referral&utm_content=HuasoFoundries/math_histogram&utm_campaign=badger)
 [![Packagist](https://img.shields.io/packagist/dm/huasofoundries/math_histogram.svg)](https://packagist.org/packages/huasofoundries/math_histogram)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/?branch=master) [![Build Status](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/badges/build.png?b=master)](https://scrutinizer-ci.com/g/HuasoFoundries/math_histogram/build-status/master) [![StyleCI](https://styleci.io/repos/55424673/shield?branch=master)](https://styleci.io/repos/55424673)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHuasoFoundries%2Fmath_histogram.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FHuasoFoundries%2Fmath_histogram?ref=badge_shield)
 
 
 
@@ -52,3 +53,7 @@ installed, you need to do:
 before you can start using Math_Histogram in your scripts.
 
 --- Jesus M. Castagnetto
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FHuasoFoundries%2Fmath_histogram.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FHuasoFoundries%2Fmath_histogram?ref=badge_large)
